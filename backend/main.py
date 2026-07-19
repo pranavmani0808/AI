@@ -31,12 +31,15 @@ app.include_router(chat.router)
 async def check_qdrant_health() -> bool:
     """Verifies Qdrant connection health via HTTP endpoint."""
     try:
+        protocol = "https" if settings.QDRANT_PORT == 443 else "http"
+        url = f"{protocol}://{settings.QDRANT_HOST}:{settings.QDRANT_PORT}/"
         async with httpx.AsyncClient(timeout=2.0) as client:
-            res = await client.get(f"http://{settings.QDRANT_HOST}:{settings.QDRANT_PORT}/")
+            res = await client.get(url)
             return res.status_code == 200
     except Exception as e:
         print(f"Qdrant health check failed: {e}")
         return False
+
 
 
 async def check_searxng_health() -> bool:
