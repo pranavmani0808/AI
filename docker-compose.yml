@@ -1,0 +1,157 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: search_engine_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres_password_dev}
+      POSTGRES_DB: ${POSTGRES_DB:-search_engine}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    container_name: search_engine_redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  qdrant:
+    image: qdrant/qdrant:latest
+    container_name: search_engine_qdrant
+    restart: unless-stopped
+    ports:
+      - "6333:6333"
+      - "6334:6334"
+    volumes:
+      - qdrant_data:/qdrant/storage
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:6333/readyz || exit 1"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  searxng:
+    image: searxng/searxng:latest
+    container_name: search_engine_searxng
+    restart: unless-stopped
+    environment:
+      - SEARXNG_SECRET_KEY=${SEARXNG_SECRET_KEY:-34293f0b2f3484c2f42a5a9c086d7cb0efb32e652a9261a9b20ad97ee899c75a}
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./searxng/settings.yml:/etc/searxng/settings.yml:ro
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:8080/ || exit 1"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: search_engine_backend
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/app
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_HOST=db
+      - POSTGRES_PORT=5432
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - REDIS_URL=redis://redis:6379/0
+      - CELERY_BROKER_URL=redis://redis:6379/0
+      - CELERY_RESULT_BACKEND=redis://redis:6379/0
+      - QDRANT_HOST=qdrant
+      - QDRANT_PORT=6333
+      - SEARXNG_URL=http://searxng:8080
+      - SEARXNG_SECRET_KEY=${SEARXNG_SECRET_KEY}
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      qdrant:
+        condition: service_healthy
+      searxng:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:8000/health || exit 1"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  celery_worker:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: search_engine_celery_worker
+    restart: unless-stopped
+    command: celery -A backend.core.celery_app.celery_app worker --loglevel=info
+    volumes:
+      - ./backend:/app
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_HOST=db
+      - POSTGRES_PORT=5432
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - REDIS_URL=redis://redis:6379/0
+      - CELERY_BROKER_URL=redis://redis:6379/0
+      - CELERY_RESULT_BACKEND=redis://redis:6379/0
+      - QDRANT_HOST=qdrant
+      - QDRANT_PORT=6333
+      - SEARXNG_URL=http://searxng:8080
+      - SEARXNG_SECRET_KEY=${SEARXNG_SECRET_KEY}
+    depends_on:
+      redis:
+        condition: service_healthy
+      db:
+        condition: service_healthy
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: search_engine_frontend
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    environment:
+      - NEXT_PUBLIC_API_URL=http://localhost:8000
+    depends_on:
+      backend:
+        condition: service_healthy
+
+volumes:
+  postgres_data:
+  redis_data:
+  qdrant_data:
