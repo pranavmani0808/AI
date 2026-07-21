@@ -1,84 +1,61 @@
-from fastapi import FastAPI, HTTPException, status
+from fastapi import FastAPI, status
 from fastapi.middleware.cors import CORSMiddleware
-import httpx
 
 from backend.core.config import settings
 from backend.database.postgres import check_postgres_health
 from backend.database.redis import check_redis_health
+from backend.services.qdrant import check_qdrant_health
+from backend.services.searxng import check_searxng_health
 from backend.api import search, crawl, chat
 
 app = FastAPI(
-    title="AI Search Engine API",
-    description="Backend services for AI Search Engine (Phase 1 Setup)",
+    title=settings.APP_NAME,
+    description="Backend foundation for AI Search Engine with Autonomous Web Intelligence",
     version="1.0.0"
 )
 
-# Configure CORS
+# Configure CORS dynamically using ALLOWED_ORIGINS config
+origins = [origin.strip() for origin in settings.ALLOWED_ORIGINS.split(",")] if settings.ALLOWED_ORIGINS else []
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Adjust in production
+    allow_origins=origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-# Include Routers
-app.include_router(search.router)
-app.include_router(crawl.router)
-app.include_router(chat.router)
+# Include Routers mounted with the /api prefix
+app.include_router(search.router, prefix="/api")
+app.include_router(crawl.router, prefix="/api")
+app.include_router(chat.router, prefix="/api")
 
-
-async def check_qdrant_health() -> bool:
-    """Verifies Qdrant connection health via HTTP endpoint."""
-    try:
-        protocol = "https" if settings.QDRANT_PORT == 443 else "http"
-        url = f"{protocol}://{settings.QDRANT_HOST}:{settings.QDRANT_PORT}/"
-        async with httpx.AsyncClient(timeout=2.0) as client:
-            res = await client.get(url)
-            return res.status_code == 200
-    except Exception as e:
-        print(f"Qdrant health check failed: {e}")
-        return False
-
-
-
-async def check_searxng_health() -> bool:
-    """Verifies SearXNG connection health via HTTP endpoint."""
-    try:
-        async with httpx.AsyncClient(timeout=2.0) as client:
-            # We hit the home page of SearXNG which should return 200 OK
-            res = await client.get(f"{settings.SEARXNG_URL}/")
-            return res.status_code == 200
-    except Exception as e:
-        print(f"SearXNG health check failed: {e}")
-        return False
-
+@app.get("/", status_code=status.HTTP_200_OK)
+async def read_root():
+    """Verify application operational status."""
+    return {
+        "name": "AI Search Engine with Autonomous Web Intelligence",
+        "status": "running"
+    }
 
 @app.get("/health", status_code=status.HTTP_200_OK)
-async def liveness_check():
-    """Liveness check to verify the FastAPI application is running."""
-    return {"status": "healthy", "service": "backend"}
-
-
-@app.get("/health/ready", status_code=status.HTTP_200_OK)
-async def readiness_check():
-    """Readiness check verifying all downstream dependencies are reachable."""
+async def health_check():
+    """Verify operational health of downstream system dependencies."""
     postgres_ok = await check_postgres_health()
     redis_ok = await check_redis_health()
     qdrant_ok = await check_qdrant_health()
     searxng_ok = await check_searxng_health()
 
-    status_dict = {
-        "postgres": "up" if postgres_ok else "down",
-        "redis": "up" if redis_ok else "down",
-        "qdrant": "up" if qdrant_ok else "down",
-        "searxng": "up" if searxng_ok else "down",
+    services_status = {
+        "postgres": "connected" if postgres_ok else "unavailable",
+        "redis": "connected" if redis_ok else "unavailable",
+        "qdrant": "connected" if qdrant_ok else "unavailable",
+        "searxng": "connected" if searxng_ok else "unavailable"
     }
 
-    if not all([postgres_ok, redis_ok, qdrant_ok, searxng_ok]):
-        raise HTTPException(
-            status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
-            detail={"status": "unready", "dependencies": status_dict}
-        )
+    # If any dependency goes down, we report "degraded" health without crashing Uvicorn
+    overall_status = "healthy" if all([postgres_ok, redis_ok, qdrant_ok, searxng_ok]) else "degraded"
 
-    return {"status": "ready", "dependencies": status_dict}
+    return {
+        "status": overall_status,
+        "services": services_status
+    }

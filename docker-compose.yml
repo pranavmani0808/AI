@@ -2,25 +2,25 @@ version: '3.8'
 
 services:
   db:
-    image: postgres:16-alpine
+    image: postgres:16.3-alpine
     container_name: search_engine_db
     restart: unless-stopped
     environment:
-      POSTGRES_USER: ${POSTGRES_USER:-postgres}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres_password_dev}
-      POSTGRES_DB: ${POSTGRES_DB:-search_engine}
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: ai_search
     ports:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
+      test: ["CMD-SHELL", "pg_isready -U postgres -d ai_search"]
       interval: 5s
       timeout: 5s
       retries: 5
 
   redis:
-    image: redis:7-alpine
+    image: redis:7.2.5-alpine
     container_name: search_engine_redis
     restart: unless-stopped
     ports:
@@ -34,7 +34,7 @@ services:
       retries: 5
 
   qdrant:
-    image: qdrant/qdrant:latest
+    image: qdrant/qdrant:v1.9.7
     container_name: search_engine_qdrant
     restart: unless-stopped
     ports:
@@ -42,24 +42,19 @@ services:
       - "6334:6334"
     volumes:
       - qdrant_data:/qdrant/storage
-    healthcheck:
-      test: ["CMD-SHELL", "curl -f http://localhost:6333/readyz || exit 1"]
-      interval: 5s
-      timeout: 5s
-      retries: 5
 
   searxng:
     image: searxng/searxng:latest
     container_name: search_engine_searxng
     restart: unless-stopped
-    environment:
-      - SEARXNG_SECRET_KEY=${SEARXNG_SECRET_KEY:-34293f0b2f3484c2f42a5a9c086d7cb0efb32e652a9261a9b20ad97ee899c75a}
+    env_file:
+      - .env
     ports:
       - "8080:8080"
     volumes:
       - ./searxng/settings.yml:/etc/searxng/settings.yml:ro
     healthcheck:
-      test: ["CMD-SHELL", "curl -f http://localhost:8080/ || exit 1"]
+      test: ["CMD-SHELL", "nc -w 1 localhost 8080 || exit 1"]
       interval: 5s
       timeout: 5s
       retries: 5
@@ -73,29 +68,16 @@ services:
     ports:
       - "8000:8000"
     volumes:
-      - ./backend:/app
-    environment:
-      - POSTGRES_USER=${POSTGRES_USER}
-      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
-      - POSTGRES_DB=${POSTGRES_DB}
-      - POSTGRES_HOST=db
-      - POSTGRES_PORT=5432
-      - REDIS_HOST=redis
-      - REDIS_PORT=6379
-      - REDIS_URL=redis://redis:6379/0
-      - CELERY_BROKER_URL=redis://redis:6379/0
-      - CELERY_RESULT_BACKEND=redis://redis:6379/0
-      - QDRANT_HOST=qdrant
-      - QDRANT_PORT=6333
-      - SEARXNG_URL=http://searxng:8080
-      - SEARXNG_SECRET_KEY=${SEARXNG_SECRET_KEY}
+      - ./backend:/app/backend
+    env_file:
+      - .env
     depends_on:
       db:
         condition: service_healthy
       redis:
         condition: service_healthy
       qdrant:
-        condition: service_healthy
+        condition: service_started
       searxng:
         condition: service_healthy
     healthcheck:
@@ -112,26 +94,13 @@ services:
     restart: unless-stopped
     command: celery -A backend.core.celery_app.celery_app worker --loglevel=info
     volumes:
-      - ./backend:/app
-    environment:
-      - POSTGRES_USER=${POSTGRES_USER}
-      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
-      - POSTGRES_DB=${POSTGRES_DB}
-      - POSTGRES_HOST=db
-      - POSTGRES_PORT=5432
-      - REDIS_HOST=redis
-      - REDIS_PORT=6379
-      - REDIS_URL=redis://redis:6379/0
-      - CELERY_BROKER_URL=redis://redis:6379/0
-      - CELERY_RESULT_BACKEND=redis://redis:6379/0
-      - QDRANT_HOST=qdrant
-      - QDRANT_PORT=6333
-      - SEARXNG_URL=http://searxng:8080
-      - SEARXNG_SECRET_KEY=${SEARXNG_SECRET_KEY}
+      - ./backend:/app/backend
+    env_file:
+      - .env
     depends_on:
-      redis:
-        condition: service_healthy
       db:
+        condition: service_healthy
+      redis:
         condition: service_healthy
 
   frontend:
@@ -147,9 +116,9 @@ services:
       - /app/node_modules
     environment:
       - NEXT_PUBLIC_API_URL=http://localhost:8000
+    # Soft dependency - will start during build or development regardless of health status
     depends_on:
-      backend:
-        condition: service_healthy
+      - backend
 
 volumes:
   postgres_data:

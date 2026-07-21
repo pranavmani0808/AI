@@ -7,7 +7,6 @@ celery_app = Celery(
     backend=settings.CELERY_RESULT_BACKEND
 )
 
-# Optional configuration overrides
 celery_app.conf.update(
     task_serializer="json",
     accept_content=["json"],
@@ -16,5 +15,7 @@ celery_app.conf.update(
     enable_utc=True,
 )
 
-# Auto-discover tasks in backend packages if needed later
-# celery_app.autodiscover_tasks(['backend.api'])
+@celery_app.task(name="backend.core.celery_app.health_check_task")
+def health_check_task() -> str:
+    """Simple test task to verify Celery workers are functioning."""
+    return "celery_worker_active"

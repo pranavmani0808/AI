@@ -2,10 +2,11 @@ from fastapi import APIRouter
 
 router = APIRouter(prefix="/chat", tags=["Chat"])
 
-@router.post("")
-async def send_chat_message(message: str):
-    """Placeholder chat/LLM response endpoint."""
+@router.get("/status")
+async def get_chat_status():
+    """Placeholder chat module status check for Phase 1."""
     return {
-        "status": "success",
-        "response": f"Mock chat response to message: '{message}' (Phase 1 Placeholder)"
+        "module": "chat",
+        "status": "ready",
+        "phase": "placeholder"
     }
