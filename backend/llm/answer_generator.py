@@ -2,7 +2,7 @@ import time
 from typing import List, Tuple, Optional
 from datetime import datetime
 from backend.rag.models import RetrievedChunk
-from backend.llm.models import GeneratedAnswer, GroundingEvidence
+from backend.llm.models import GeneratedAnswer, GroundingEvidence, Citation
 from backend.llm.context_builder import build_grounding_context
 from backend.llm.prompts import SYSTEM_INSTRUCTION
 from backend.llm.gemini import GeminiProvider
@@ -69,13 +69,12 @@ async def generate_grounded_answer(
                 if len(clean_text) > 160:
                     clean_text = clean_text[:160] + "..."
                 summary_parts.append(f"{clean_text} [{idx}]")
-                citations.append(GroundingEvidence(
-                    id=idx, 
-                    chunk_id=ev.chunk_id, 
-                    url=ev.url, 
-                    title=ev.title, 
-                    text=ev.text, 
-                    similarity_score=ev.similarity_score
+                citations.append(Citation(
+                    id=idx,
+                    title=ev.title,
+                    url=ev.url,
+                    domain=ev.domain,
+                    chunk_id=ev.chunk_id
                 ))
             validated_text = "Extracted Evidence Summary: " + " ".join(summary_parts)
             grounded = True
