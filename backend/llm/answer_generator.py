@@ -60,25 +60,29 @@ async def generate_grounded_answer(
         )
         
     except Exception as e:
-        print(f"Grounded answer generation failed: {e}. Synthesizing fallback summary from top retrieved evidence.")
-        summary_parts = []
-        citations = []
-        for idx, ev in enumerate(evidences[:4], start=1):
-            clean_text = ev.text.strip().replace("\n", " ")
-            if len(clean_text) > 180:
-                clean_text = clean_text[:180] + "..."
-            summary_parts.append(f"{clean_text} [{idx}]")
-            citations.append(GroundingEvidence(
-                id=idx, 
-                chunk_id=ev.chunk_id, 
-                url=ev.url, 
-                title=ev.title, 
-                text=ev.text, 
-                similarity_score=ev.similarity_score
-            ))
-        
-        validated_text = "Based on retrieved sources: " + " ".join(summary_parts)
-        grounded = True
+        print(f"Grounded answer generation failed (LLM rate limit / error): {e}.")
+        if evidences and len(evidences) > 0:
+            summary_parts = []
+            citations = []
+            for idx, ev in enumerate(evidences[:3], start=1):
+                clean_text = ev.text.strip().replace("\n", " ")
+                if len(clean_text) > 160:
+                    clean_text = clean_text[:160] + "..."
+                summary_parts.append(f"{clean_text} [{idx}]")
+                citations.append(GroundingEvidence(
+                    id=idx, 
+                    chunk_id=ev.chunk_id, 
+                    url=ev.url, 
+                    title=ev.title, 
+                    text=ev.text, 
+                    similarity_score=ev.similarity_score
+                ))
+            validated_text = "Extracted Evidence Summary: " + " ".join(summary_parts)
+            grounded = True
+        else:
+            validated_text = "Reliable sources were retrieved, but answer generation is temporarily unavailable."
+            citations = []
+            grounded = False
         
     generation_time = int((time.time() - start_time) * 1000)
     

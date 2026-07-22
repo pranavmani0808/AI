@@ -33,6 +33,12 @@ FRESHNESS_KEYWORDS = {
     "who won", "breaking", "update"
 }
 
+ACADEMIC_KEYWORDS = {
+    "paper", "papers", "arxiv", "journal", "journals", "publication",
+    "publications", "literature", "doi", "study", "studies", "citation",
+    "citations", "manuscript", "preprint", "research paper", "research papers"
+}
+
 PRODUCT_KEYWORDS = {
     "phone", "laptop", "price", "buy", "best under", "specs", "iphone",
     "macbook", "galaxy", "review", "deal", "discount", "brand"
@@ -75,19 +81,20 @@ class QueryRouter:
                 "strategy": "conversational_llm"
             }
 
-        # 2. Check explicit selected mode overrides
         query_lower = query.strip().lower()
         words = set(re.findall(r"\w+", query_lower))
         has_freshness = bool(words & FRESHNESS_KEYWORDS)
 
-        if selected_mode == "academic":
+        # 2. Check explicit academic keywords or academic mode
+        is_academic_query = (selected_mode == "academic") or bool(words & ACADEMIC_KEYWORDS) or ("research paper" in query_lower) or ("research papers" in query_lower)
+
+        if is_academic_query:
             intent = QueryIntent.ACADEMIC
             retrieval_used = True
         elif selected_mode == "products" or (words & PRODUCT_KEYWORDS and ("best" in words or "price" in words)):
             intent = QueryIntent.PRODUCT
             retrieval_used = True
         elif selected_mode == "research":
-            # If user explicitly selected Research mode, check if it's general knowledge or deep research
             intent = QueryIntent.RESEARCH
             retrieval_used = True
         else:
@@ -98,7 +105,6 @@ class QueryRouter:
                 query_lower.startswith("how does ") or 
                 query_lower.startswith("define ")
             ):
-                # General knowledge conceptual query
                 intent = QueryIntent.GENERAL_KNOWLEDGE
                 retrieval_used = False
             else:

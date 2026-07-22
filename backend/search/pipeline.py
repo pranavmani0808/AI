@@ -149,12 +149,17 @@ async def run_search_crawl_pipeline(
         final_score = round((0.60 * item.score) + (0.40 * quality_score), 4)
 
         diagnostics.append({
+            "source_url": item.url,
             "domain": domain,
             "source_type": get_source_type(domain),
+            "search_query": query,
             "search_rank": rank,
-            "query_relevance": item.score,
+            "pre_crawl_score": item.score,
+            "post_crawl_score": final_score,
+            "semantic_score": item.score,
             "quality_score": quality_score,
-            "final_score": final_score,
+            "retrieved_at": datetime.utcnow().isoformat(),
+            "citation_ids": [rank] if (is_selected and quality_score > 0) else [],
             "selected": is_selected and (quality_score > 0)
         })
 

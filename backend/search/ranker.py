@@ -4,6 +4,12 @@ from backend.search.models import SearchResult
 from backend.intelligence.query_router import QueryIntent
 
 # Categorized Domain Registries
+PRIMARY_OFFICIAL_DOMAINS = {
+    "react.dev", "nextjs.org", "python.org", "docs.python.org", "postgresql.org",
+    "openai.com", "apple.com", "samsung.com", "microsoft.com", "google.com",
+    "nvidia.com", "developer.mozilla.org", "kernel.org", "golang.org", "rust-lang.org"
+}
+
 PRODUCT_TIER1_DOMAINS = {
     "amazon.in", "flipkart.com", "apple.com", "samsung.com", "oneplus.in", "oneplus.com",
     "mi.com", "realme.com", "vivo.com", "oppo.com", "motorola.in", "google.com"
@@ -17,7 +23,7 @@ PRODUCT_TIER2_DOMAINS = {
 
 PRODUCT_PENALIZED_DOMAINS = {
     "geeksforgeeks.org", "w3schools.com", "tutorialspoint.com", "uxpin.com", "buttercups.tech",
-    "javatpoint.com", "leetcode.com", "hackerrank.com", "npm.com", "pypi.org"
+    "javatpoint.com", "leetcode.com", "hackerrank.com"
 }
 
 ACADEMIC_DOMAINS = {
@@ -30,59 +36,77 @@ NEWS_TECH_DOMAINS = {
     "reuters.com", "bloomberg.com", "news.ycombinator.com", "bbc.com", "apnews.com"
 }
 
+COMMUNITY_DOMAINS = {
+    "news.ycombinator.com", "reddit.com", "dev.to", "github.com", "stackoverflow.com"
+}
+
 def get_source_type(domain: str) -> str:
-    """Classifies domain into human-readable source types."""
+    """Classifies domain into granular source types."""
     d = domain.lower().replace("www.", "")
-    if any(m in d for m in ["apple.com", "samsung.com", "oneplus", "mi.com", "realme", "vivo", "oppo", "google.com"]):
-        return "manufacturer"
+    if d in PRIMARY_OFFICIAL_DOMAINS or any(d.endswith(p) for p in ["react.dev", "nextjs.org", "python.org", "postgresql.org"]):
+        return "primary"
+    if any(m in d for m in ["openai.com", "apple.com", "samsung.com", "microsoft.com", "google.com"]):
+        return "official"
     if any(r in d for r in ["amazon", "flipkart"]):
         return "retailer"
-    if d in PRODUCT_TIER2_DOMAINS or "mobile" in d or "gadget" in d or "smartprix" in d:
+    if d in PRODUCT_TIER2_DOMAINS or "mobile" in d or "gadget" in d or "smartprix" in d or "rtings" in d:
         return "review"
     if d in ACADEMIC_DOMAINS or d.endswith(".edu"):
         return "academic"
     if d in NEWS_TECH_DOMAINS:
         return "news"
+    if d in COMMUNITY_DOMAINS:
+        return "community"
     return "other"
 
 def calculate_domain_intent_score(domain: str, intent: str) -> float:
-    """Computes intent-aware domain compatibility score [0.0 - 1.0]."""
+    """
+    Computes intent-aware domain compatibility score [0.0 - 1.0].
+    Known domain lists act as BOOSTS rather than hard exclusions.
+    Unknown domains receive a neutral baseline score of 0.65.
+    """
     d = domain.lower().replace("www.", "")
+    source_type = get_source_type(domain)
     
+    if source_type in ["primary", "official"]:
+        return 1.00
+
     if intent == QueryIntent.PRODUCT.value or intent == "product":
-        if d in PRODUCT_TIER1_DOMAINS:
+        if d in PRODUCT_TIER1_DOMAINS or source_type in ["manufacturer", "retailer"]:
             return 1.00
-        if d in PRODUCT_TIER2_DOMAINS or "mobile" in d or "gadget" in d or "smartprix" in d:
+        if d in PRODUCT_TIER2_DOMAINS or source_type == "review":
             return 0.95
         if d in NEWS_TECH_DOMAINS:
             return 0.80
         if d in PRODUCT_PENALIZED_DOMAINS:
             return 0.15
-        return 0.50
+        return 0.65  # Fair baseline score for unlisted domains
 
     if intent == QueryIntent.ACADEMIC.value or intent == "academic":
-        if d in ACADEMIC_DOMAINS or d.endswith(".edu"):
+        if d in ACADEMIC_DOMAINS or d.endswith(".edu") or source_type == "academic":
             return 1.00
-        if d in NEWS_TECH_DOMAINS:
-            return 0.70
-        return 0.40
+        if d in NEWS_TECH_DOMAINS or source_type == "primary":
+            return 0.80
+        return 0.65  # Fair baseline score for unlisted domains
 
     if intent in [QueryIntent.WEB_SEARCH.value, QueryIntent.RESEARCH.value, "web_search", "research"]:
-        if d in NEWS_TECH_DOMAINS or d in PRODUCT_TIER2_DOMAINS:
+        if source_type in ["primary", "official"]:
+            return 1.00
+        if d in NEWS_TECH_DOMAINS or source_type == "news":
             return 0.95
         if d in ACADEMIC_DOMAINS or d.endswith(".edu"):
             return 0.90
-        return 0.65
+        return 0.65  # Fair baseline score for unlisted domains
 
-    return 0.50
+    return 0.65
 
 def rank_search_results(results: List[SearchResult], query: str, intent: str = "web_search") -> List[SearchResult]:
     """
     Multi-signal Intent-Aware Search Result Reranker:
     Scores candidate results before crawling based on:
-    1. Title-query keyword relevance (0.35)
-    2. Snippet-query keyword relevance (0.25)
-    3. Domain-intent compatibility score (0.40)
+    1. Title-query keyword relevance (0.40)
+    2. Snippet-query keyword relevance (0.30)
+    3. Domain-intent compatibility score (0.30)
     
     Applies domain diversity capping (max 2 per domain).
     """
@@ -105,20 +129,19 @@ def rank_search_results(results: List[SearchResult], query: str, intent: str = "
         snippet_matches = sum(1 for token in query_tokens if token in snippet_lower)
         snippet_rel = (snippet_matches / len(query_tokens)) if query_tokens else 0.5
         
-        # Signal 3: Intent-Domain compatibility score
+        # Signal 3: Intent-Domain compatibility score (Boosts known, neutral for unknown)
         domain_score = calculate_domain_intent_score(domain, intent)
         
         # Pre-crawl composite score calculation
-        pre_crawl_score = (0.35 * title_rel) + (0.25 * snippet_rel) + (0.40 * domain_score)
+        pre_crawl_score = (0.40 * title_rel) + (0.30 * snippet_rel) + (0.30 * domain_score)
         
-        # Penalty adjustments for raw pdfs or query-irrelevant directories
         if item.url.endswith('.pdf') or '/cgi-bin/' in item.url:
-            pre_crawl_score -= 0.15
+            pre_crawl_score -= 0.10
             
         item.score = max(0.0, min(1.0, round(pre_crawl_score, 4)))
         ranked.append(item)
 
-    # Sort descending by calculated pre-crawl score
+    # Sort descending by pre-crawl score
     ranked.sort(key=lambda x: x.score, reverse=True)
     
     # Domain Diversity Capping (Max 2 URLs per domain)
