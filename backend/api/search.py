@@ -92,8 +92,12 @@ async def perform_research(request: SearchRequest):
             reformulation_meta = await reformulator.reformulate(request.query, request.chat_history)
             query_to_run = reformulation_meta["standalone_query"]
 
-        # Live Web Search & Retrieval Pipeline
-        response, crawled_docs, search_query_id = await run_search_crawl_pipeline(query_to_run, limit=request.limit)
+        # Live Web Search & Retrieval Pipeline with Intent-Aware Reranking & Diagnostics
+        response, crawled_docs, search_query_id, diagnostics = await run_search_crawl_pipeline(
+            query_to_run,
+            limit=request.limit,
+            intent=routing["intent"]
+        )
         
         # STEP 6: Filter out failed scrapes before indexing & visual presentation
         valid_crawled_docs = [
@@ -165,7 +169,8 @@ async def perform_research(request: SearchRequest):
             "answer": answer_result.answer,
             "sources": sources_list,
             "evidences": evidences_list,
-            "citations": citations_list
+            "citations": citations_list,
+            "diagnostics": diagnostics
         }
     except Exception as e:
         import traceback

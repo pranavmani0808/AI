@@ -1,0 +1,412 @@
+{
+  "1_greeting": {
+    "original_query": "hi",
+    "standalone_query": "hi",
+    "query": "hi",
+    "mode": "web",
+    "intent": "conversational",
+    "reformulated": false,
+    "retrieval_used": false,
+    "search_id": 0,
+    "answer": "Hi! How can I help you today?",
+    "sources": [],
+    "evidences": [],
+    "citations": [],
+    "_ms": 24832
+  },
+  "2_general_knowledge": {
+    "original_query": "What is RAG?",
+    "standalone_query": "What is RAG?",
+    "query": "What is RAG?",
+    "mode": "web",
+    "intent": "general_knowledge",
+    "reformulated": false,
+    "retrieval_used": false,
+    "search_id": 0,
+    "answer": "I'm IntelliSearch, your AI research assistant. How can I help you today?",
+    "sources": [],
+    "evidences": [],
+    "citations": [],
+    "_ms": 22372
+  },
+  "3_live_web": {
+    "original_query": "latest AI news today",
+    "standalone_query": "latest AI news today",
+    "query": "latest AI news today",
+    "mode": "web",
+    "intent": "web_search",
+    "reformulated": false,
+    "retrieval_used": true,
+    "search_id": 39,
+    "answer": "An internal error occurred while generating the answer. Please try again.",
+    "sources": [
+      {
+        "id": "src_1",
+        "title": "AI News | Latest News | Insights Powering AI-Driven Business Growth",
+        "url": "https://www.artificialintelligence-news.com/",
+        "domain": "www.artificialintelligence-news.com",
+        "excerpt": "AI News delivers the latest updates in artificial intelligence, machine learning, deep learning, enterprise AI, and emerging tech worldwide.",
+        "crawledAt": "2026-07-22T17:51:07.872617"
+      },
+      {
+        "id": "src_2",
+        "title": "AI News \u2014 Today's Top Stories, Tracked & Ranked | AI Weekly",
+        "url": "https://aiweekly.co/",
+        "domain": "aiweekly.co",
+        "excerpt": "AI news delivered 3x/week. Curated AI updates on funding, models, regulation, and applications. Read by 44,000+ professionals since 2015. Subscribe free.",
+        "crawledAt": "2026-07-22T17:51:07.872624"
+      },
+      {
+        "id": "src_3",
+        "title": "AI News & Artificial Intelligence | TechCrunch",
+        "url": "https://techcrunch.com/category/artificial-intelligence/",
+        "domain": "techcrunch.com",
+        "excerpt": "Read the latest on artificial intelligence and machine learning tech, the companies that are building them, and the ethical issues AI raises today.",
+        "crawledAt": "2026-07-22T17:51:07.872628"
+      },
+      {
+        "id": "src_4",
+        "title": "Latest AI & ML News, Insights, and Trends - Times of AI",
+        "url": "https://www.timesofai.com/",
+        "domain": "www.timesofai.com",
+        "excerpt": "Stay updated with the latest AI, ML, cybersecurity, & data science news, & trends. Explore expert opinions, industry, & top AI tools updates at Times of AI.",
+        "crawledAt": "2026-07-22T17:51:07.872630"
+      },
+      {
+        "id": "src_5",
+        "title": "Artificial intelligence - BBC News",
+        "url": "https://www.bbc.com/news/topics/ce1qrvleleqt",
+        "domain": "www.bbc.com",
+        "excerpt": "All the latest content about Artificial intelligence from the BBC.",
+        "crawledAt": "2026-07-22T17:51:07.872634"
+      }
+    ],
+    "evidences": [
+      {
+        "id": "ev_1",
+        "sourceId": "src_4",
+        "content": "A Model Called Honeycomb Leaked in Cursor. Fans Say It\u2019s Opus 5.\n\nIndonesia Moves to Become Southeast Asia\u2019s First Nation to Write AI Into Copyright Law\n\nGoogle Delays Gemini 3.5 Pro Launch as Coding Capabilities Fall Short of Internal Standards\n\nIs Kimi K3 World\u2019s Largest Open AI Model? Here\u2019s What We Know\n\nThe EU Wants Google to Open Android to Rival AI Assistants\n\nEurope Is Taking HealthAI Oversight Global Before Its Own Rules Fully Arrive\n\nOpenAI Says States Can Regulate AI, as Long as They Match\n\nOpenAI\u2019s GPT-Red Uses AI to Find AI\u2019s Weaknesses Before Hackers Do\n\nAI Model Evolution: The Complete Timeline of Every Major AI Family\n\nGPT Version Timeline: How AI Got Smarter Over the Years\n\n5 Fastest-Growing AI Startup Companies Revolutionizing Technology\n\nHow to Use Claude Tags in Slack to Automate Everyday Work\n\nAll OpenAI\u2019s Models and Initiatives in Research & Medical Sciences So Far (2024-2026)\n\nEvery New Siri AI Feature Apple Introduced at WWDC 2026\n\nGrok 1.0 to 4.3: What Improved and What Still Lags\n\nTop 6 Multimodal AI Models to Watch in 2026",
+        "relevanceScore": 64
+      },
+      {
+        "id": "ev_2",
+        "sourceId": "src_3",
+        "content": "AI\n\nNews coverage on artificial intelligence and machine learning tech, the companies building them, and the ethical issues AI raises today. This encompasses generative AI, including large language models, text-to-image and text-to-video models; speech recognition and generation; and predictive analytics.\n\nStartups\n\nArcee, a US open source AI lab, says Chinese models are not inherently dangerous\n\nJulie Bort\n\n1 hour ago\n\nArcee, a US open source AI lab, says Chinese models are not inherently dangerous\n\nJulie Bort\n\nMedia & Entertainment\n\nSubstack\u2019s new tool tells you who\u2019s been writing their newsletters with AI\n\nSarah Perez\n\n1 hour ago\n\nSubstack\u2019s new tool tells you who\u2019s been writing their newsletters with AI\n\nSarah Perez\n\nAI\n\nOpenAI\u2019s AI spending spree has ballooned to $750B\n\nTim De Chant\n\n2 hours ago\n\nOpenAI\u2019s AI spending spree has ballooned to $750B\n\nTim De Chant\n\nApps\n\nThe browser wars aren\u2019t about search anymore \u2014 here are the best alternatives to Chrome and Safari\n\nLauren Forristal",
+        "relevanceScore": 62
+      },
+      {
+        "id": "ev_3",
+        "sourceId": "src_1",
+        "content": "July 21, 2026\n\nChinese open-weight models are cheap. Washington is deciding what that costs.\n\nAI in Action\n\nJuly 20, 2026\n\nUS public health agencies to test OpenAI and Anthropic AI models\n\nOpen-Source & Democratised AI\n\nJuly 20, 2026\n\nKimi K3 open-weight model: China\u2019s biggest AI is a bet on memory, not compute\n\nHealthcare & Wellness AI\n\nJuly 17, 2026\n\nBunkerhill raises $55M to scale agentic AI across health systems\n\nAI in Action\n\nJuly 16, 2026\n\nExamining Google DeepMind\u2019s AI bioresilience push\n\nHealthcare & Wellness AI\n\nJuly 16, 2026\n\nNeko Health raises $700 million to expand AI body scans in the US\n\nArtificial Intelligence\n\nJuly 15, 2026\n\nNokia\u2019s AI-RAN platform: a radio comeback that runs on NVIDIA\n\nHealthcare & Wellness AI\n\nJuly 14, 2026\n\nAWS and Bluesight build AI for hospital 340B compliance\n\nAI in Action\n\nJuly 13, 2026\n\nAI agent crawlers now need permission. Here\u2019s how to get it\n\nJoin our Community",
+        "relevanceScore": 62
+      },
+      {
+        "id": "ev_4",
+        "sourceId": "src_1",
+        "content": "Join our Community\n\nSubscribe now to get all our premium content and latest tech news delivered straight to your inbox\n\nEditorial SPOTLIGHT FOCUS\n\nAI in Retail and Marketing: Forecasting, Personalisation, and Customer Insight\n\nTrustpilot partners with AI companies as traditional search declines\n\nHershey applies AI across its supply chain operations\n\nAmazon launches Alexa for Shopping as Rufus moves behind the scenes\n\nKlarna backs Google UCP to power AI agent payments\n\nApplications\n\nThailand becomes one of the first in Asia to get the Sora app\n\nEntertainment & Media\n\nOctober 30, 2025\n\nMalaysia launches Ryt Bank, its first AI-powered bank\n\nFinance AI\n\nAugust 26, 2025\n\nGoogle\u2019s Veo 3 AI video creation tools are now widely available\n\nAI in Action\n\nJuly 29, 2025\n\nComputer Vision\n\nMicrosoft\u2019s Majorana 2 quantum chip is also a case study for agentic AI in R&D\n\nInside AI\n\nJune 3, 2026\n\nUS and Japan announce sweeping AI and tech collaboration\n\nArtificial Intelligence\n\nApril 11, 2024",
+        "relevanceScore": 62
+      },
+      {
+        "id": "ev_5",
+        "sourceId": "src_1",
+        "content": "SenseTime\u2019s Galaxy Project targets domestic AI chip scale-up\n\nAI Business Strategy, AI in Action, Cybersecurity AI, Data Engineering & MLOps, Deep Dives, Featured News, Features, Finance AI, Government & Public Sector AI, Inside AI, Legal Industry AI, Multimodal AI, Natural Language Processing (NLP)\n\nGoogle\u2019s Gemini 3.6 Flash targets enterprise agent token costs\n\nAI Hardware & Chips, AI in Action, Artificial Intelligence, Featured News, Features, Healthcare & Wellness AI, Infrastructure & Hardware\n\nBristol Myers Squibb buys Nvidia AI system for drug discovery\n\nAI in Action, Cybersecurity AI, Deep Dives, Featured News, Features, Governance, Regulation & Policy, Government & Public Sector AI, Healthcare & Wellness AI, How It Works\n\nExamining Google DeepMind\u2019s AI bioresilience push\n\nAI Business Strategy, AI Hardware & Chips, AI Market Trends, Artificial Intelligence, Featured News, Infrastructure & Hardware\n\nNokia\u2019s AI-RAN platform: a radio comeback that runs on NVIDIA\n\nLatest\n\nArtificial Intelligence\n\nJuly 21, 2026",
+        "relevanceScore": 59
+      },
+      {
+        "id": "ev_6",
+        "sourceId": "src_5",
+        "content": "Artificial intelligence\n\nOpenAI says its AI went rogue and launched a cyber-attack\n\nOpenAI has revealed some of its most advanced AI models went rogue and hacked a start-up after it lost control of them during a security test.\n\nOpenAI says its AI went rogue and launched 'unprecedented' cyber-attack\n\nIt is one of the first publicly disclosed cyber-attacks carried out by AI without direct human involvement.\n\nWill your job be replaced by AI? Here are the roles most affected\n\nArtificial Intelligence companies make vast claims about their tools replacing human labour - our charts show what's happening.\n\nAI minister role boosted but tech department axed in Burnham shake-up\n\nKanishka Narayan will attend cabinet - but no longer have the leadership of a technology secretary.\n\nPupils bring WW1 stories to life with AI films\n\nThe pupils have been using diaries of soldiers from Cornwall as the basis of their work.\n\nMayor pledges \u00a318m to ready London for AI shift",
+        "relevanceScore": 58
+      }
+    ],
+    "citations": [
+      {
+        "id": 1,
+        "sourceId": "src_4",
+        "evidenceId": "ev_1"
+      },
+      {
+        "id": 2,
+        "sourceId": "src_3",
+        "evidenceId": "ev_2"
+      },
+      {
+        "id": 3,
+        "sourceId": "src_1",
+        "evidenceId": "ev_3"
+      },
+      {
+        "id": 4,
+        "sourceId": "src_1",
+        "evidenceId": "ev_4"
+      },
+      {
+        "id": 5,
+        "sourceId": "src_1",
+        "evidenceId": "ev_5"
+      },
+      {
+        "id": 6,
+        "sourceId": "src_5",
+        "evidenceId": "ev_6"
+      }
+    ],
+    "_ms": 24309
+  },
+  "4_followup": {
+    "original_query": "What about performance?",
+    "standalone_query": "Compare React and Next.js - performance",
+    "query": "What about performance?",
+    "mode": "web",
+    "intent": "web_search",
+    "reformulated": true,
+    "retrieval_used": true,
+    "search_id": 42,
+    "answer": "An internal error occurred while generating the answer. Please try again.",
+    "sources": [
+      {
+        "id": "src_1",
+        "title": "Next.js vs React: Key Differences, Performance & When to Use Each in 2026 | UXPin",
+        "url": "https://www.uxpin.com/studio/blog/nextjs-vs-react/",
+        "domain": "www.uxpin.com",
+        "excerpt": "Next.js vs React compared for 2026: SSR, routing, performance, SEO, and use cases. Side-by-side feature comparison to help you choose the right tool for your project.",
+        "crawledAt": "2026-07-22T17:51:54.294877"
+      },
+      {
+        "id": "src_2",
+        "title": "NextJS vs React - GeeksforGeeks",
+        "url": "https://www.geeksforgeeks.org/reactjs/nextjs-vs-reactjs-which-one-to-choose/",
+        "domain": "www.geeksforgeeks.org",
+        "excerpt": "Your All-in-One Learning Portal: GeeksforGeeks is a comprehensive educational platform that empowers learners across domains-spanning computer science and programming, school education, upskilling, commerce, software tools, competitive exams, and more.",
+        "crawledAt": "2026-07-22T17:51:54.294885"
+      },
+      {
+        "id": "src_3",
+        "title": "Source 3",
+        "url": "https://getanteon.com/blog/next-react-performance-analysis/",
+        "domain": "getanteon.com",
+        "excerpt": "Next.js vs React.js Performance Analysis\n\nBack in the early days of the internet, making websites fast was pretty straightforward. Pages were static, and the most exciting thing happening might be a f...",
+        "crawledAt": "2026-07-22T17:51:54.294894"
+      },
+      {
+        "id": "src_4",
+        "title": "Next JS vs React Performance: A Comprehensive Comparison - DEV Community",
+        "url": "https://dev.to/jhk_info/next-js-vs-react-performance-a-comprehensive-comparison-4fgc",
+        "domain": "dev.to",
+        "excerpt": "Introduction            Overview of Next JS and React   The landscape of modern web... Tagged with nextjs, react, performance, webdev.",
+        "crawledAt": "2026-07-22T17:51:54.294897"
+      },
+      {
+        "id": "src_5",
+        "title": "Next.js vs. React Performance | Rollbar",
+        "url": "https://rollbar.com/blog/next-js-vs-react-performance/",
+        "domain": "rollbar.com",
+        "excerpt": "This performance comparison looks at rendering, static site generation, code splitting, and SEO. Make an informed choice for your frontend framework.",
+        "crawledAt": "2026-07-22T17:51:54.294901"
+      },
+      {
+        "id": "src_6",
+        "title": "Next.js vs. React: The difference and which framework to choose | Contentful",
+        "url": "https://www.contentful.com/blog/next-js-vs-react/",
+        "domain": "www.contentful.com",
+        "excerpt": "Learn the key differences between two winning JavaScript frontend frameworks, Next.js and React, and discover which will take your development team to success.",
+        "crawledAt": "2026-07-22T17:51:54.294904"
+      }
+    ],
+    "evidences": [
+      {
+        "id": "ev_1",
+        "sourceId": "src_4",
+        "content": "Core Aspects Affecting Performance: Speed, Load Times, and Responsiveness\n\nThree core aspects determine the performance of a web application: speed, load times, and responsiveness. Speed refers to how quickly a page loads and becomes interactive. Load times are particularly important for search engine optimization (SEO), as search engines prioritize fast-loading pages. Responsiveness refers to how well an application performs across different devices and screen sizes, ensuring a seamless experience for all users.\n\nThe Impact of Performance on SEO Rankings\n\nSearch engines like Google consider page load times and overall performance as ranking factors. Slow pages can lead to lower rankings, while faster pages tend to rank higher. Server-side rendering (SSR) and static site generation (SSG), both offered by Next JS, improve SEO performance by ensuring that content is immediately available to search engines, reducing the reliance on client-side JavaScript for crawling.",
+        "relevanceScore": 47
+      },
+      {
+        "id": "ev_2",
+        "sourceId": "src_4",
+        "content": "Importance of Performance in Modern Web Development\n\nIn today\u2019s fast-paced digital environment, performance is a critical determinant of user experience. Websites that load slowly, lag in interactivity, or have inefficient rendering processes drive users away, which ultimately leads to a decrease in conversion rates and a negative impact on SEO rankings. The need for optimized performance is undeniable, making the comparison between Next JS and React an essential consideration for developers seeking to build fast, scalable applications.\n\nThe Need for a Comprehensive Comparison\n\nAlthough both frameworks are widely adopted, understanding how they compare in terms of performance is crucial for making the right choice for a project. While React excels at creating dynamic, interactive UIs, Next JS introduces additional features that enhance performance, such as SSR and SSG. This comparison will delve into the key performance aspects of both frameworks, helping developers choose the one that best meets their needs.\n\nWhat is Next JS?",
+        "relevanceScore": 39
+      },
+      {
+        "id": "ev_3",
+        "sourceId": "src_3",
+        "content": "Introducing Anteon: a high-performance load testing tool explicitly designed to directly confront such challenges. \ud83d\ude80 It\u2019s time to monitor the response time of your Next.js websites and ensure that your users consistently receive high-performance sites with every interaction they have. \u2705\ud83c\udf10\n\nWhy wait any longer? Ensure your Next.js websites are delivering the ultimate user experience by using Anteon today. We\u2019ve got you covered for any queries or support; our friendly and vibrant Discord community is always ready to lend a hand. Join us on Discord and be part of our continuously evolving and learning community. \ud83c\udf93\ud83d\udc65\n\nKeep in mind, in the finest theaters, the best stagehands operate the show behind the scenes. Let Anteon take on that role for you. \ud83c\udfad\u2b50 Let\u2019s ensure together that your website performance is always in the spotlight!\n\nRelated Blogs",
+        "relevanceScore": 38
+      },
+      {
+        "id": "ev_4",
+        "sourceId": "src_6",
+        "content": "Ultimately, it depends on the specific needs of your project. Use Next.js if any of the following are important to you:\n\nHigh performance. Pages load faster with Next.js, as they have been pre-built and loaded as HTML. On top of this, images are optimized and JavaScript code is loaded only as needed due to automatic code splitting.\n\nHigh performance. Pages load faster with Next.js, as they have been pre-built and loaded as HTML. On top of this, images are optimized and JavaScript code is loaded only as needed due to automatic code splitting.\n\nSEO. Your content can be pre-rendered and indexed by search engines much faster, because of SSG and SSR in Next.js. This improves your SEO rankings.\n\nSEO. Your content can be pre-rendered and indexed by search engines much faster, because of SSG and SSR in Next.js. This improves your SEO rankings.",
+        "relevanceScore": 35
+      },
+      {
+        "id": "ev_5",
+        "sourceId": "src_4",
+        "content": "How React Handles Client-Side Rendering\n\nReact predominantly relies on client-side rendering (CSR), where JavaScript code runs in the browser to render the UI. This method allows for fast interactivity once the page has loaded, as React dynamically updates the DOM in response to user actions. However, CSR can lead to slower initial load times, especially on large applications, because the browser must load and execute JavaScript before rendering the page\u2019s content.\n\nPerformance Factors in Web Development\n\nWhy Performance Matters for User Experience\n\nPerformance is fundamental to user experience because slow-loading pages or unresponsive interfaces directly impact user satisfaction. In a world where attention spans are shrinking, users expect immediate responses from web applications. Slow performance can frustrate users, leading to increased bounce rates and reduced engagement. A fast, responsive application, on the other hand, fosters a positive experience, increases retention, and drives conversions.",
+        "relevanceScore": 35
+      },
+      {
+        "id": "ev_6",
+        "sourceId": "src_4",
+        "content": "Benchmarks and Case Studies on Load Time Performance\n\nNumerous case studies and benchmarks have demonstrated the performance advantages of Next JS over React when it comes to load times. Static site generation and server-side rendering in Next JS ensure faster loading times, particularly for SEO-focused websites. React, while fast for client-side rendering, may require additional optimizations to achieve comparable load times.\n\nHow Next JS Optimizes Server-Side Rendering for Performance\n\nWhat is Server-Side Rendering (SSR)?\n\nServer-side rendering (SSR) involves rendering a webpage on the server before sending it to the browser, ensuring that the content is available for users and search engines right away. SSR reduces the amount of JavaScript processing the browser must do, resulting in faster initial load times and improved performance.\n\nHow SSR Enhances Next JS Performance",
+        "relevanceScore": 35
+      }
+    ],
+    "citations": [
+      {
+        "id": 1,
+        "sourceId": "src_4",
+        "evidenceId": "ev_1"
+      },
+      {
+        "id": 2,
+        "sourceId": "src_4",
+        "evidenceId": "ev_2"
+      },
+      {
+        "id": 3,
+        "sourceId": "src_3",
+        "evidenceId": "ev_3"
+      },
+      {
+        "id": 4,
+        "sourceId": "src_6",
+        "evidenceId": "ev_4"
+      },
+      {
+        "id": 5,
+        "sourceId": "src_4",
+        "evidenceId": "ev_5"
+      },
+      {
+        "id": 6,
+        "sourceId": "src_4",
+        "evidenceId": "ev_6"
+      }
+    ],
+    "_ms": 45069
+  },
+  "5_product": {
+    "original_query": "Best phone under \u20b970,000 in India",
+    "standalone_query": "Best phone under \u20b970,000 in India",
+    "query": "Best phone under \u20b970,000 in India",
+    "mode": "web",
+    "intent": "product",
+    "reformulated": false,
+    "retrieval_used": true,
+    "search_id": 44,
+    "answer": "An internal error occurred while generating the answer. Please try again.",
+    "sources": [
+      {
+        "id": "src_1",
+        "title": "Best Mobile Phones Under 70,000 in India (Jul 2026)  | 91mobiles.com",
+        "url": "https://www.91mobiles.com/list-of-phones/best-mobile-phones-under-70000",
+        "domain": "www.91mobiles.com",
+        "excerpt": "Looking for best mobiles below 70000 in India but confused? Get the cheapest mobiles equipped with a good camera, battery, and storage online.",
+        "crawledAt": "2026-07-22T17:52:31.828877"
+      },
+      {
+        "id": "src_2",
+        "title": "Best Mobile Phones Under 70000 in India 2026 | Smartprix",
+        "url": "https://www.smartprix.com/mobiles/best-phones-under-70000-list",
+        "domain": "www.smartprix.com",
+        "excerpt": "Looking for the best mobile phones under 70000 with price in India? Here's the list of the best mobile phones Under 70000 in India with price, specs, and features.",
+        "crawledAt": "2026-07-22T17:52:31.828888"
+      },
+      {
+        "id": "src_3",
+        "title": "Best Mobile Phones Under 70,000 In India (Jul 2026) | Mysmartprice",
+        "url": "https://www.mysmartprice.com/mobile/pricelist/mobile-phones-under-70000-price-list-in-india.html",
+        "domain": "www.mysmartprice.com",
+        "excerpt": "Find the below list of Best Mobile Phones Under 70,000 in India with specifications, expert score, ratings and pictures.  This list was last updated on 22nd Jul 2026",
+        "crawledAt": "2026-07-22T17:52:31.828892"
+      },
+      {
+        "id": "src_4",
+        "title": "Best Phones Under 70000 in India (July 2026), Price, Features, Specifications (HT Tech)",
+        "url": "https://tech.hindustantimes.com/mobile-finder/best-phone-under-70000",
+        "domain": "tech.hindustantimes.com",
+        "excerpt": "Best Phones Under 70000 in India (July 2026) - Best Phones Under 70000 in India, check list on HT Tech based on price, camera, battery, performance, features, reviews, ratings and specifications.",
+        "crawledAt": "2026-07-22T17:52:31.828897"
+      }
+    ],
+    "evidences": [
+      {
+        "id": "ev_1",
+        "sourceId": "src_2",
+        "content": "Best Mobile Phones Under 70000\n\nList of best Mobile Phones under 70000 with price and specifications in India. Mobile phones priced under 70000 rupees come with premium features and advanced capabilities that ensure you stay up-to-date with the latest technology trends. On our online page, we offer a wide selection of mobile phones from top brands in the industry, including Samsung, Apple, OnePlus, and others that bring phones at this budget.",
+        "relevanceScore": 76
+      },
+      {
+        "id": "ev_2",
+        "sourceId": "src_1",
+        "content": "Best Mobile Phones Under 70,000 (Jul 2026)\n\nSmartphones under Rs. 70,000 occupy the highest tier of the premium segment, offering flagship-caliber hardware including the latest processors, large-format camera sensors, and premium displays with high peak brightness. Buyers at this price expect best-in-class performance across gaming, photography, and video, along with durable builds and robust software support for four or more years. Advanced AI camera features, satellite connectivity options, and charging speeds above 65W are increasingly common here. Prices are verified from Amazon India and Flipkart as of 22nd July 2026.",
+        "relevanceScore": 72
+      },
+      {
+        "id": "ev_3",
+        "sourceId": "src_4",
+        "content": "Filter by Price range:\n\nBest Mobiles Under \u20b910000\nBest Mobiles Under \u20b915000\nBest Mobiles Under \u20b920000\nBest Mobiles Under \u20b925000\nBest Mobiles Under \u20b930000\nBest Mobiles Under \u20b940000\nBest Mobiles Under \u20b950000\nBest Mobiles Under \u20b960000\nBest Mobiles Under \u20b970000\nBest Mobiles Under \u20b980000\nBest Mobiles Under \u20b9100000\n\nOnePlus 11 Marble Odyssey Edition\n\n\u20b964,999\n\nAdd to compare\n\nView Details\n\nOnePlus 11 Marble Odyssey Edition\n\nTecno Phantom V Fold\n\nAdd to compare\n\nLearn More\nCheck Price\n\nTecno Phantom V Fold\n\nGoogle Pixel 7 Pro 5G\n\n24% OFF\n\u20b965,999\n\n\u20b984,999\n\nAdd to compare\n\nView Details\n\nGoogle Pixel 7 Pro 5G\n\nDiscover the most popular smartphones that everyone is talking about. Our trending section features the hottest devices based on user interest and market demand.\n\n3% OFF\n\nApple iPhone 16\n\n\u20b967,900\n\u20b969,900\n\nBuy Now\nCheck Details\n\nApple iPhone 16\n\n31% OFF\n\nSamsung Galaxy S25 Ultra\n\n\u20b989,640\n\u20b9129,999\n\nBuy Now\nCheck Details\n\nSamsung Galaxy S25 Ultra\n\n1% OFF\n\nApple iPhone 17\n\n\u20b981,900\n\u20b982,900\n\nBuy Now\nCheck Details",
+        "relevanceScore": 67
+      },
+      {
+        "id": "ev_4",
+        "sourceId": "src_2",
+        "content": "Mobile phones in this price range are ideal for those looking for a high-end mobile phone experience. Premium features such as a higher responsive touch screen, better resolution, long-lasting battery life, fast processors, and advanced camera capabilities are commonly found in these mobile phones. When shopping for a mobile phone under 70000 rupees, it's important to consider your specific needs and requirements. Some people may prioritize a large display for watching videos, while others may prioritize a powerful processor for running demanding apps and games.\n\nOn our online page, we make it easy for you to browse through different options and find the best mobile phone that meets your needs. Our user-friendly platform offers detailed information about each phone, allowing you to make an informed decision before making a purchase.",
+        "relevanceScore": 66
+      },
+      {
+        "id": "ev_5",
+        "sourceId": "src_2",
+        "content": "Have a look at the list of best mobile phones under 70000 rupees that offer a high-end user experience with premium features and advanced capabilities. With a variety of models to choose from, you are sure to find a device that matches your preferences. Make sure to check user reviews, ratings, and features of all the products before shopping. This price list was last updated on July 22, 2026.\n\nLike\n\nComment\n\nShare\n\nMotorola Edge 70 Max\n\nDual Sim, 5G, VoLTE, Vo5G, NFC, eSIM, Wi-Fi\n\nSnapdragon 8 Gen5, Octa Core, 3.8 GHz Processor\n\n8 GB RAM, 256 GB inbuilt\n\n7100 mAh Battery with 90W Fast Charging\n\n6.8 inches, 1440 x 3168 px, 144 Hz Display with Punch Hole\n\n50 MP + 8 MP Dual Rear & 32 MP Front Camera\n\nAndroid v16\n\nNo FM Radio\n\nVivo X200T\n\nDual Sim, 5G, VoLTE, NFC, eSIM, Wi-Fi, IR Blaster\n\nDimensity 9400 Plus, Octa Core, 3.63 GHz Processor\n\n12 GB RAM, 256 GB inbuilt\n\n6200 mAh Battery with 90W Fast Charging\n\n6.67 inches, 1260 x 2800 px, 120 Hz Display with Punch Hole",
+        "relevanceScore": 66
+      },
+      {
+        "id": "ev_6",
+        "sourceId": "src_4",
+        "content": "Buy Now\nCheck Details\n\nApple iPhone 17\n\n46% OFF\n\nSamsung Galaxy A55\n\n\u20b923,418\n\u20b942,999\n\nBuy Now\nCheck Details\n\nSamsung Galaxy A55\n\nStay updated with the newest smartphone releases. Our latest section showcases the most recent devices with cutting-edge technology and innovative features.\n\n39% OFF\n\nMotorola Edge 70 Max 5G\n\n\u20b954,999\n\u20b989,999\n\nBuy Now\nCheck Details\n\nMotorola Edge 70 Max 5G\n\n43% OFF\n\nRealme Narzo 100x 5G\n\n\u20b920,499\n\u20b935,999\n\nBuy Now\nCheck Details\n\nRealme Narzo 100x 5G\n\n37% OFF\n\nOPPO Reno 16c 5G\n\n\u20b946,999\n\u20b974,999\n\nBuy Now\nCheck Details\n\nOPPO Reno 16c 5G\n\n31% OFF\n\nOPPO Reno 16 5G\n\n\u20b961,999\n\u20b989,999\n\nBuy Now\nCheck Details\n\nOPPO Reno 16 5G\n\nDiscover comprehensive video reviews, unboxings, and detailed walkthroughs of the latest smartphones and mobile technology. Watch expert analysis and buying guides to make informed decisions.\n\niPhone 16e price in India, key specs, and more (Video)\n20 Feb 2025\n\niPhone 16e price in India, key specs, and more (Video)",
+        "relevanceScore": 64
+      }
+    ],
+    "citations": [
+      {
+        "id": 1,
+        "sourceId": "src_2",
+        "evidenceId": "ev_1"
+      },
+      {
+        "id": 2,
+        "sourceId": "src_1",
+        "evidenceId": "ev_2"
+      },
+      {
+        "id": 3,
+        "sourceId": "src_4",
+        "evidenceId": "ev_3"
+      },
+      {
+        "id": 4,
+        "sourceId": "src_2",
+        "evidenceId": "ev_4"
+      },
+      {
+        "id": 5,
+        "sourceId": "src_2",
+        "evidenceId": "ev_5"
+      },
+      {
+        "id": 6,
+        "sourceId": "src_4",
+        "evidenceId": "ev_6"
+      }
+    ],
+    "_ms": 37489
+  },
+  "6_deep_research": {
+    "error": "HTTP Error 500: Internal Server Error",
+    "_ms": 14882
+  },
+  "7_zero_evidence": {
+    "error": "HTTP Error 500: Internal Server Error",
+    "_ms": 15508
+  }
+}

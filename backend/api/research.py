@@ -187,10 +187,10 @@ async def perform_autonomous_research(request_body: ResearchRequest, request: Re
         return ResearchResponseModel(
             research_id=state.search_id or 1,
             query=request_body.query,
-            iterations=state.current_iteration,
-            subqueries=len(state.subqueries_executed),
+            iterations=state.iteration,
+            subqueries=len(state.subqueries),
             sources_analyzed=len(valid_pages),
-            coverage_score=state.coverage_score,
+            coverage_score=state.coverage_score or 0.0,
             contradictions=contradictions_list,
             answer=final_answer.answer,
             citations=frontend_citations,
