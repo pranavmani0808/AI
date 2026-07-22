@@ -26,6 +26,7 @@ class ResearchRequest(BaseModel):
     exclude_domains: Optional[List[str]] = None
     source_preference: Optional[str] = "balanced"
     date_preference: Optional[str] = "any_time"
+    chat_history: Optional[List[Dict[str, Any]]] = None
 
 class ResearchResponseModel(BaseModel):
     research_id: int
@@ -91,6 +92,13 @@ async def perform_autonomous_research(request_body: ResearchRequest, request: Re
             }
         )
 
+    query_to_run = request_body.query
+    reformulation_meta = {"original_query": request_body.query, "standalone_query": request_body.query, "reformulated": False}
+    if request_body.chat_history and len(request_body.chat_history) > 0:
+        reformulator = QueryReformulator()
+        reformulation_meta = await reformulator.reformulate(request_body.query, request_body.chat_history)
+        query_to_run = reformulation_meta["standalone_query"]
+
     state = None
     final_answer = None
     metrics = None
@@ -99,7 +107,7 @@ async def perform_autonomous_research(request_body: ResearchRequest, request: Re
         loop = AutonomousResearchLoop()
         with track_stage_duration("total_ms"):
             state, final_answer, metrics = await loop.execute_research(
-                query=request_body.query,
+                query=query_to_run,
                 max_iterations=request_body.max_iterations,
                 max_subqueries=request_body.max_subqueries,
                 max_sources=request_body.max_sources,

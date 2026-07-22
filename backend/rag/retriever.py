@@ -1,14 +1,16 @@
 from typing import List
+from backend.core.config import settings
 from backend.rag.models import RetrievedChunk
 from backend.rag.embeddings import embed_text
 from backend.rag.vector_store import search_similar
 
-async def retrieve_evidence(query: str, search_id: int, top_k: int = 8) -> List[RetrievedChunk]:
+async def retrieve_evidence(query: str, search_id: int, top_k: int = 8, min_score: float = None) -> List[RetrievedChunk]:
     """
-    Translates user search query strings into normalized vectors
-    and queries the Qdrant database with strict search_id filter boundaries.
+    Translates user search query strings into normalized vectors,
+    queries Qdrant vector store with search_id isolation filters,
+    and filters out weak chunks below min_score threshold.
     """
-    # Enforce safe parameter bounds
+    threshold = min_score if min_score is not None else settings.RAG_MIN_SCORE
     bounded_k = max(1, min(20, top_k))
     
     if not query.strip():
@@ -21,9 +23,16 @@ async def retrieve_evidence(query: str, search_id: int, top_k: int = 8) -> List[
             print("Aborting retrieval: query embedding vector generation failed.")
             return []
             
-        # 2. Search vector store using metadata query filters for isolation
+        # 2. Search vector store using metadata query filters
         results = search_similar(query_vector, search_id, top_k=bounded_k)
-        return results
+        
+        # 3. Filter out weak chunks below configurable similarity threshold
+        filtered_results = [r for r in results if r.score >= threshold]
+        
+        if len(results) > len(filtered_results):
+            print(f"Similarity Threshold Filter: Kept {len(filtered_results)}/{len(results)} chunks meeting min_score >= {threshold}")
+            
+        return filtered_results
     except Exception as e:
         print(f"Retrieval query execution failed for search_id={search_id}: {e}")
         return []

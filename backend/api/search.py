@@ -33,13 +33,16 @@ async def perform_search(request: SearchRequest):
             detail=f"Web search discovery query failed: {str(e)}"
         )
 
+from backend.intelligence.query_reformulator import QueryReformulator
+
 @router.post("/research")
 async def perform_research(request: SearchRequest):
     """
     Autonomous deep research & query-routed search pipeline:
     1. Classifies query intent with QueryRouter.
     2. Fast-paths conversational or general knowledge queries directly to LLM without search/crawling.
-    3. For live web queries, executes search, crawls sources, filters failed scrapes, builds RAG, and generates grounded answer.
+    3. Reformulates contextual follow-up questions into standalone queries if chat history exists.
+    4. For live web queries, executes search, crawls sources, filters failed scrapes, builds RAG, and generates grounded answer.
     """
     try:
         router_engine = QueryRouter()
@@ -63,9 +66,12 @@ async def perform_research(request: SearchRequest):
                     answer_text = "I'm IntelliSearch, your AI research assistant. How can I help you today?"
             
             return {
+                "original_query": request.query,
+                "standalone_query": request.query,
                 "query": request.query,
                 "mode": "web",
                 "intent": routing["intent"],
+                "reformulated": False,
                 "retrieval_used": False,
                 "search_id": 0,
                 "answer": answer_text.strip(),
@@ -74,8 +80,16 @@ async def perform_research(request: SearchRequest):
                 "citations": []
             }
 
+        # Standalone Query Reformulation for follow-up queries
+        query_to_run = request.query
+        reformulation_meta = {"original_query": request.query, "standalone_query": request.query, "reformulated": False}
+        if request.chat_history and len(request.chat_history) > 0:
+            reformulator = QueryReformulator()
+            reformulation_meta = await reformulator.reformulate(request.query, request.chat_history)
+            query_to_run = reformulation_meta["standalone_query"]
+
         # Live Web Search & Retrieval Pipeline
-        response, crawled_docs, search_query_id = await run_search_crawl_pipeline(request.query, limit=request.limit)
+        response, crawled_docs, search_query_id = await run_search_crawl_pipeline(query_to_run, limit=request.limit)
         
         # STEP 6: Filter out failed scrapes before indexing & visual presentation
         valid_crawled_docs = [
@@ -136,9 +150,12 @@ async def perform_research(request: SearchRequest):
         )
             
         return {
+            "original_query": request.query,
+            "standalone_query": query_to_run,
             "query": request.query,
             "mode": "web",
             "intent": routing["intent"],
+            "reformulated": reformulation_meta["reformulated"],
             "retrieval_used": True,
             "search_id": search_query_id,
             "answer": answer_result.answer,

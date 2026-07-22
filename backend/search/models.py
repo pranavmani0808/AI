@@ -1,10 +1,11 @@
 from pydantic import BaseModel, Field
-from typing import List, Optional
+from typing import List, Dict, Optional, Any
 from backend.core.config import settings
 
 class SearchRequest(BaseModel):
     query: str = Field(..., min_length=1, max_length=settings.MAX_QUERY_LENGTH, description="The search query string")
     limit: int = Field(default=10, ge=1, le=50, description="Max number of candidate URLs to retrieve")
+    chat_history: Optional[List[Dict[str, Any]]] = Field(default=None, description="Recent conversation turns for follow-up query reformulation")
 
 class SearchResult(BaseModel):
     title: str = Field(..., description="The title of the search result")
