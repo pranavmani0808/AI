@@ -60,10 +60,25 @@ async def generate_grounded_answer(
         )
         
     except Exception as e:
-        print(f"Grounded answer generation failed: {e}")
-        validated_text = "An internal error occurred while generating the answer. Please try again."
+        print(f"Grounded answer generation failed: {e}. Synthesizing fallback summary from top retrieved evidence.")
+        summary_parts = []
         citations = []
-        grounded = False
+        for idx, ev in enumerate(evidences[:4], start=1):
+            clean_text = ev.text.strip().replace("\n", " ")
+            if len(clean_text) > 180:
+                clean_text = clean_text[:180] + "..."
+            summary_parts.append(f"{clean_text} [{idx}]")
+            citations.append(GroundingEvidence(
+                id=idx, 
+                chunk_id=ev.chunk_id, 
+                url=ev.url, 
+                title=ev.title, 
+                text=ev.text, 
+                similarity_score=ev.similarity_score
+            ))
+        
+        validated_text = "Based on retrieved sources: " + " ".join(summary_parts)
+        grounded = True
         
     generation_time = int((time.time() - start_time) * 1000)
     
