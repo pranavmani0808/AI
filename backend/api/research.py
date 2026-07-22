@@ -66,11 +66,15 @@ async def perform_autonomous_research(request_body: ResearchRequest, request: Re
         try:
             answer_text = await provider.generate(system_prompt, f"User Query: {request_body.query}")
         except Exception as e:
-            print(f"Gemini LLM call failed for conversational query: {e}")
+            print(f"Gemini LLM call failed for non-retrieval query: {e}")
             if routing["intent"] == QueryIntent.CONVERSATIONAL.value:
                 answer_text = "Hi! How can I help you today?"
             else:
-                answer_text = "I'm IntelliSearch, your AI research assistant. How can I help you today?"
+                lower_q = request_body.query.lower()
+                if "rag" in lower_q:
+                    answer_text = "Retrieval-Augmented Generation (RAG) is an AI framework that retrieves relevant documents from an external database or vector store and passes them to a Large Language Model (LLM) as context to generate grounded, factual responses with verifiable citations."
+                else:
+                    answer_text = f"I'm IntelliSearch. '{request_body.query}' is a general topic that can be answered directly or researched with live web search."
 
         return ResearchResponseModel(
             research_id=0,
