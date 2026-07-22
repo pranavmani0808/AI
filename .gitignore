@@ -13,6 +13,7 @@ __pycache__/
 .Python
 env/
 venv/
+backend/venv/
 .venv/
 build/
 develop-eggs/

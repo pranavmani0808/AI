@@ -1,8 +1,12 @@
+import os
 from pydantic_settings import BaseSettings, SettingsConfigDict
+
+current_dir = os.path.dirname(os.path.abspath(__file__))
+env_path = os.path.abspath(os.path.join(current_dir, "../../.env"))
 
 class Settings(BaseSettings):
     model_config = SettingsConfigDict(
-        env_file=".env",
+        env_file=env_path,
         env_file_encoding="utf-8",
         extra="ignore"
     )
@@ -30,11 +34,45 @@ class Settings(BaseSettings):
     # Qdrant Configuration
     QDRANT_URL: str = "http://qdrant:6333"
 
-    # LLM Configuration (For Later Phases)
-    GEMINI_API_KEY: str = ""
+    # LLM Configuration
     LLM_PROVIDER: str = "gemini"
+    GEMINI_API_KEY: str = ""
+    GEMINI_MODEL: str = "gemini-3.5-flash"
 
-    # Embedding Configuration (For Later Phases)
+    # RAG Grounding Configurations
+    RAG_TOP_K: int = 8
+    RAG_MIN_SCORE: float = 0.35
+    RAG_MAX_CONTEXT_CHUNKS: int = 6
+    RAG_MAX_CONTEXT_CHARS: int = 18000
+
+
+    # Embedding Configuration
     EMBEDDING_PROVIDER: str = "local"
+    EMBEDDING_MODEL: str = "sentence-transformers/all-MiniLM-L6-v2"
+    QDRANT_COLLECTION: str = "web_evidence"
+
+    # Phase 5 - Multi-Step Research Configurations
+    RESEARCH_MAX_ITERATIONS: int = 3
+    RESEARCH_MAX_SUBQUERIES: int = 6
+    RESEARCH_MAX_SOURCES: int = 20
+    RESEARCH_MAX_PARALLEL_SEARCHES: int = 3
+    RESEARCH_TIMEOUT_SECONDS: int = 90
+    RESEARCH_COVERAGE_THRESHOLD: float = 0.85
+    MAX_SOURCES_PER_DOMAIN: int = 2
+    WEIGHT_AUTHORITY: float = 0.45
+    WEIGHT_RELEVANCE: float = 0.40
+    WEIGHT_FRESHNESS: float = 0.15
+
+
+    # Explicit service timeouts (seconds)
+    TIMEOUT_SEARXNG: float = 10.0
+    TIMEOUT_QDRANT: float = 10.0
+    TIMEOUT_GEMINI: float = 20.0
+    TIMEOUT_CRAWLER: float = 10.0
+    TIMEOUT_DATABASE: float = 10.0
+    
+    # Request Size Limits
+    MAX_QUERY_LENGTH: int = 4000
+    FOLLOWUP_MIN_SIMILARITY: float = 0.70
 
 settings = Settings()

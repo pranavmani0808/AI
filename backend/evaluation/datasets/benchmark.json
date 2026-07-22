@@ -1,0 +1,122 @@
+[
+  {
+    "id": "tech_001",
+    "query": "Compare React and Next.js for SEO and server rendering",
+    "category": "technical",
+    "expected_topics": ["routing", "rendering", "SEO", "performance"],
+    "minimum_sources": 3,
+    "requires_citations": true
+  },
+  {
+    "id": "tech_002",
+    "query": "Explain how React Server Components differ from standard client components",
+    "category": "technical",
+    "expected_topics": ["Server Components", "Client Components", "hydration", "performance"],
+    "minimum_sources": 2,
+    "requires_citations": true
+  },
+  {
+    "id": "comp_001",
+    "query": "Compare PostgreSQL and MongoDB for a large scale modern web application",
+    "category": "comparison",
+    "expected_topics": ["relational", "document", "scalability", "schemas", "performance"],
+    "minimum_sources": 3,
+    "requires_citations": true
+  },
+  {
+    "id": "comp_002",
+    "query": "Compare Redis and Memcached for distributed caching systems",
+    "category": "comparison",
+    "expected_topics": ["data structures", "replication", "performance", "persistence"],
+    "minimum_sources": 2,
+    "requires_citations": true
+  },
+  {
+    "id": "expl_001",
+    "query": "How does retrieval augmented generation work in modern LLM applications",
+    "category": "explanation",
+    "expected_topics": ["retrieval", "embeddings", "vector store", "LLM generation", "context"],
+    "minimum_sources": 2,
+    "requires_citations": true
+  },
+  {
+    "id": "expl_002",
+    "query": "Explain the difference between symmetric and asymmetric encryption algorithms",
+    "category": "explanation",
+    "expected_topics": ["keys", "algorithms", "performance", "security"],
+    "minimum_sources": 2,
+    "requires_citations": true
+  },
+  {
+    "id": "gap_001",
+    "query": "What are the exact secret engineering specifications of the Google Gemini 5.0 architecture design",
+    "category": "evidence_gap",
+    "expected_topics": ["architecture", "parameters", "training", "Google"],
+    "minimum_sources": 1,
+    "requires_citations": false
+  },
+  {
+    "id": "gap_002",
+    "query": "List all internal code commits made to Vercel Next.js private repository in the last 2 hours",
+    "category": "evidence_gap",
+    "expected_topics": ["Next.js", "commits", "repository", "Vercel"],
+    "minimum_sources": 1,
+    "requires_citations": false
+  },
+  {
+    "id": "contra_001",
+    "query": "Is React classified as a library or a framework by official developers",
+    "category": "contradiction",
+    "expected_topics": ["library", "framework", "React", "developers"],
+    "minimum_sources": 2,
+    "requires_citations": true
+  },
+  {
+    "id": "contra_002",
+    "query": "Does Next.js App Router perform faster than Pages Router in production builds",
+    "category": "contradiction",
+    "expected_topics": ["App Router", "Pages Router", "performance", "benchmarks"],
+    "minimum_sources": 2,
+    "requires_citations": true
+  },
+  {
+    "id": "curr_001",
+    "query": "What are the latest stable versions and release notes of Next.js framework in 2026",
+    "category": "current",
+    "expected_topics": ["Next.js", "release", "versions", "features"],
+    "minimum_sources": 2,
+    "requires_citations": true
+  },
+  {
+    "id": "curr_002",
+    "query": "What is the current market valuation and state of OpenAI corporation as of June 2026",
+    "category": "current",
+    "expected_topics": ["OpenAI", "market valuation", "funding", "state"],
+    "minimum_sources": 2,
+    "requires_citations": true
+  },
+  {
+    "id": "multi_001",
+    "query": "Compare React and Next.js across routing, SEO, performance, deployment and ideal use cases",
+    "category": "multi-topic",
+    "expected_topics": ["routing", "SEO", "performance", "deployment", "use cases"],
+    "minimum_sources": 4,
+    "requires_citations": true
+  },
+  {
+    "id": "multi_002",
+    "query": "Detail the full lifecycle of a web request from DNS resolution to DOM rendering",
+    "category": "multi-topic",
+    "expected_topics": ["DNS", "TCP handshake", "HTTP request", "rendering", "DOM"],
+    "minimum_sources": 3,
+    "requires_citations": true
+  },
+  {
+    "id": "tech_003",
+    "query": "How do you implement micro-frontend architecture using Webpack Module Federation",
+    "category": "technical",
+    "expected_topics": ["Module Federation", "micro-frontend", "Webpack", "remote entry"],
+    "minimum_sources": 2,
+    "requires_citations": true
+  }
+]

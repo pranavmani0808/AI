@@ -35,4 +35,10 @@ export interface SearchResult {
     specs: string[];
     pros: string[];
   };
+  intent?: string;
+  retrieval_used?: boolean;
+  contradictions?: any[];
+  researchPlan?: { objective: string; topics: string[] } | null;
+  researchCoverage?: { score: number; missing: string[]; covered: string[] } | null;
+  performance?: any;
 }

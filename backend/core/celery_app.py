@@ -15,6 +15,9 @@ celery_app.conf.update(
     enable_utc=True,
 )
 
+# Auto-discover tasks in backend packages
+celery_app.autodiscover_tasks(['backend.tasks'])
+
 @celery_app.task(name="backend.core.celery_app.health_check_task")
 def health_check_task() -> str:
     """Simple test task to verify Celery workers are functioning."""

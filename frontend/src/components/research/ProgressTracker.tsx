@@ -10,22 +10,19 @@ interface ProgressTrackerProps {
 }
 
 export default function ProgressTracker({ stages }: ProgressTrackerProps) {
-  // Get currently active stage, if any
-  const activeStage = stages.find((s) => s.status === "running");
-
   return (
-    <div className="w-full max-w-xl mx-auto bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 p-6 rounded-2xl shadow-md my-8">
+    <div className="w-full max-w-xl mx-auto peec-card p-6 rounded-2xl bg-white dark:bg-zinc-900 border border-zinc-200/90 dark:border-zinc-800 my-8">
       <div className="text-center mb-6">
-        <h3 className="text-lg font-semibold text-zinc-900 dark:text-zinc-50 tracking-tight">
-          Researching your question...
+        <h3 className="text-base font-bold text-zinc-900 dark:text-zinc-100 tracking-tight">
+          Autonomous Research Progress
         </h3>
-        <p className="text-sm text-zinc-400 dark:text-zinc-500 mt-1">
-          Running autonomous web intelligence flow
+        <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-1">
+          Crawling live web sources, extracting chunks & indexing evidence
         </p>
       </div>
 
-      <div className="flex flex-col gap-4">
-        {stages.map((stage, idx) => {
+      <div className="flex flex-col gap-3.5">
+        {stages.map((stage) => {
           const isCompleted = stage.status === "completed";
           const isRunning = stage.status === "running";
           const isFailed = stage.status === "failed";
@@ -34,30 +31,30 @@ export default function ProgressTracker({ stages }: ProgressTrackerProps) {
           return (
             <div 
               key={stage.id} 
-              className={`flex items-start gap-4 transition-all duration-300 ${
-                isIdle ? "opacity-30" : "opacity-100"
+              className={`flex items-start gap-3.5 transition-all duration-200 ${
+                isIdle ? "opacity-40" : "opacity-100"
               }`}
             >
               {/* Icon Status */}
-              <div className="mt-0.5">
+              <div className="mt-0.5 shrink-0">
                 {isCompleted && (
-                  <CheckCircle2 className="w-5 h-5 text-emerald-500 dark:text-emerald-400" />
+                  <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
                 )}
                 {isRunning && (
-                  <Loader2 className="w-5 h-5 text-violet-500 animate-spin" />
+                  <Loader2 className="w-4 h-4 text-sky-600 dark:text-sky-400 animate-spin" />
                 )}
                 {isFailed && (
-                  <AlertCircle className="w-5 h-5 text-rose-500 dark:text-rose-400" />
+                  <AlertCircle className="w-4 h-4 text-rose-500" />
                 )}
                 {isIdle && (
-                  <Circle className="w-5 h-5 text-zinc-300 dark:text-zinc-700" />
+                  <Circle className="w-4 h-4 text-zinc-300 dark:text-zinc-700" />
                 )}
               </div>
 
               {/* Stage Content */}
-              <div className="flex-1 flex flex-col">
-                <span className={`text-sm font-medium ${
-                  isRunning ? "text-violet-600 dark:text-violet-400 font-semibold" : "text-zinc-800 dark:text-zinc-200"
+              <div className="flex-1 flex flex-col min-w-0">
+                <span className={`text-xs font-semibold ${
+                  isRunning ? "text-sky-600 dark:text-sky-400 font-bold" : "text-zinc-800 dark:text-zinc-200"
                 }`}>
                   {stage.label}
                 </span>
@@ -69,7 +66,7 @@ export default function ProgressTracker({ stages }: ProgressTrackerProps) {
                       initial={{ height: 0, opacity: 0 }}
                       animate={{ height: "auto", opacity: 1 }}
                       exit={{ height: 0, opacity: 0 }}
-                      className="text-xs text-zinc-400 dark:text-zinc-500 mt-0.5 overflow-hidden"
+                      className="text-[11px] text-zinc-500 dark:text-zinc-400 mt-0.5 overflow-hidden block truncate"
                     >
                       {stage.message}
                     </motion.span>

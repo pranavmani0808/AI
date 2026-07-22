@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { ArrowRight } from "lucide-react";
 
 interface PromptSuggestionsProps {
   onSelect: (prompt: string) => void;
@@ -15,24 +16,27 @@ export default function PromptSuggestions({ onSelect }: PromptSuggestionsProps) 
   ];
 
   return (
-    <div className="w-full max-w-2xl mx-auto mt-6">
-      <p className="text-xs font-medium text-zinc-400 dark:text-zinc-500 uppercase tracking-wider mb-2 text-center">
-        Try asking
-      </p>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+    <div className="w-full max-w-2xl mx-auto mt-8">
+      <h3 className="text-xs font-bold text-zinc-400 dark:text-zinc-500 uppercase tracking-wider mb-3 text-left">
+        Suggested research questions
+      </h3>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
         {suggestions.map((sug, idx) => (
           <button
             key={idx}
             type="button"
             onClick={() => onSelect(sug.text)}
-            className="flex flex-col text-left p-3 border border-zinc-200 hover:border-zinc-300 bg-white hover:bg-zinc-50 dark:border-zinc-800 dark:hover:border-zinc-700 dark:bg-zinc-950 dark:hover:bg-zinc-900 rounded-xl transition-all shadow-sm"
+            className="peec-card peec-card-hover p-4 rounded-xl text-left flex items-center justify-between group cursor-pointer bg-white dark:bg-zinc-900 border border-zinc-200/80 dark:border-zinc-800"
           >
-            <span className="text-sm font-medium text-zinc-800 dark:text-zinc-200">
-              {sug.text}
-            </span>
-            <span className="text-xs text-zinc-400 dark:text-zinc-500 mt-0.5">
-              {sug.desc}
-            </span>
+            <div className="flex flex-col pr-2">
+              <span className="text-sm font-semibold text-zinc-900 dark:text-zinc-100 group-hover:text-sky-600 dark:group-hover:text-sky-400 transition-colors">
+                {sug.text}
+              </span>
+              <span className="text-xs text-zinc-500 dark:text-zinc-400 mt-0.5">
+                {sug.desc}
+              </span>
+            </div>
+            <ArrowRight className="w-4 h-4 text-zinc-400 dark:text-zinc-600 group-hover:text-zinc-900 dark:group-hover:text-zinc-100 group-hover:translate-x-0.5 transition-all shrink-0" />
           </button>
         ))}
       </div>

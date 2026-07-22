@@ -1,8 +1,17 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #faf9f6;
+  --foreground: #0f172a;
+  --card-bg: #ffffff;
+  --card-border: #e5e7eb;
+}
+
+.dark {
+  --background: #090d16;
+  --foreground: #f8fafc;
+  --card-bg: #111827;
+  --card-border: #1e293b;
 }
 
 @theme inline {
@@ -12,15 +21,78 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-geist-sans), system-ui, -apple-system, sans-serif;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Peec AI Inspired Minimal Design System Tokens */
+.peec-card {
+  background-color: var(--card-bg);
+  border: 1px solid var(--card-border);
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.04), 0 1px 2px -1px rgba(0, 0, 0, 0.02);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.peec-card-hover:hover {
+  border-color: #cbd5e1;
+  box-shadow: 0 4px 12px -2px rgba(0, 0, 0, 0.06), 0 2px 4px -2px rgba(0, 0, 0, 0.04);
+  transform: translateY(-1px);
+}
+
+.dark .peec-card-hover:hover {
+  border-color: #334155;
+  box-shadow: 0 4px 16px -2px rgba(0, 0, 0, 0.4);
+  transform: translateY(-1px);
+}
+
+.peec-input {
+  background-color: var(--card-bg);
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 2px 8px -2px rgba(0, 0, 0, 0.05);
+  transition: all 0.2s ease;
+}
+
+.dark .peec-input {
+  background-color: #111827;
+  border: 1px solid #1e293b;
+  box-shadow: 0 2px 8px -2px rgba(0, 0, 0, 0.3);
+}
+
+.peec-input:focus-within {
+  border-color: #0284c7;
+  box-shadow: 0 4px 16px -2px rgba(2, 132, 199, 0.12), 0 0 0 3px rgba(56, 189, 248, 0.15);
+}
+
+.dark .peec-input:focus-within {
+  border-color: #38bdf8;
+  box-shadow: 0 4px 16px -2px rgba(56, 189, 248, 0.15), 0 0 0 3px rgba(56, 189, 248, 0.1);
+}
+
+.peec-pill {
+  background-color: #f1f5f9;
+  border: 1px solid #e2e8f0;
+  color: #334155;
+  transition: all 0.15s ease;
+}
+
+.dark .peec-pill {
+  background-color: #1e293b;
+  border: 1px solid #334155;
+  color: #cbd5e1;
+}
+
+.peec-pill-active {
+  background-color: #0f172a;
+  border-color: #0f172a;
+  color: #ffffff;
+}
+
+.dark .peec-pill-active {
+  background-color: #f8fafc;
+  border-color: #f8fafc;
+  color: #0f172a;
 }

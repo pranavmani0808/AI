@@ -1,0 +1,549 @@
+{
+  "total_queries": 15,
+  "successful": 14,
+  "failed": 1,
+  "avg_latency_ms": 1652,
+  "avg_citation_validity": 1.0,
+  "avg_citation_coverage": 0.0,
+  "avg_evidence_coverage": 0.0,
+  "avg_unique_sources": 0.0,
+  "avg_iterations": 2.0,
+  "stop_reasons": {
+    "no_new_queries_generated": 14
+  },
+  "results": [
+    {
+      "query_id": "tech_001",
+      "query": "Compare React and Next.js for SEO and server rendering",
+      "category": "technical",
+      "success": false,
+      "latency_ms": 101316,
+      "error_code": "ValidationError",
+      "citation_metrics": {
+        "citation_validity": 0.0,
+        "citation_coverage": 0.0,
+        "citation_source_diversity": 0
+      },
+      "retrieval_metrics": {
+        "top_k": 0,
+        "avg_similarity": 0.0,
+        "max_similarity": 0.0,
+        "min_similarity": 0.0,
+        "unique_domains": 0
+      },
+      "research_metrics": {
+        "initial_topics": 0,
+        "covered_topics": 0,
+        "missing_topics": 0,
+        "coverage_score": 0.0,
+        "iterations": 0,
+        "stop_reason": "failed"
+      },
+      "answer": ""
+    },
+    {
+      "query_id": "tech_002",
+      "query": "Explain how React Server Components differ from standard client components",
+      "category": "technical",
+      "success": true,
+      "latency_ms": 3018,
+      "error_code": null,
+      "citation_metrics": {
+        "citation_validity": 1.0,
+        "citation_coverage": 0.0,
+        "citation_source_diversity": 0,
+        "claim_risk": 1.0
+      },
+      "retrieval_metrics": {
+        "top_k": 0,
+        "avg_similarity": 0.0,
+        "max_similarity": 0.0,
+        "min_similarity": 0.0,
+        "unique_domains": 0
+      },
+      "research_metrics": {
+        "initial_topics": 4,
+        "covered_topics": 0,
+        "missing_topics": 4,
+        "coverage_score": 0.0,
+        "iterations": 2,
+        "follow_up_queries": 7,
+        "sources_discovered": 3,
+        "sources_crawled": 0,
+        "sources_failed": 0,
+        "unique_domains": 0,
+        "contradictions_detected": 0,
+        "stop_reason": "no_new_queries_generated"
+      },
+      "answer": "I couldn't find enough reliable evidence in the retrieved sources to answer this confidently."
+    },
+    {
+      "query_id": "comp_001",
+      "query": "Compare PostgreSQL and MongoDB for a large scale modern web application",
+      "category": "comparison",
+      "success": true,
+      "latency_ms": 3107,
+      "error_code": null,
+      "citation_metrics": {
+        "citation_validity": 1.0,
+        "citation_coverage": 0.0,
+        "citation_source_diversity": 0,
+        "claim_risk": 1.0
+      },
+      "retrieval_metrics": {
+        "top_k": 0,
+        "avg_similarity": 0.0,
+        "max_similarity": 0.0,
+        "min_similarity": 0.0,
+        "unique_domains": 0
+      },
+      "research_metrics": {
+        "initial_topics": 4,
+        "covered_topics": 0,
+        "missing_topics": 4,
+        "coverage_score": 0.0,
+        "iterations": 2,
+        "follow_up_queries": 7,
+        "sources_discovered": 3,
+        "sources_crawled": 0,
+        "sources_failed": 0,
+        "unique_domains": 0,
+        "contradictions_detected": 0,
+        "stop_reason": "no_new_queries_generated"
+      },
+      "answer": "I couldn't find enough reliable evidence in the retrieved sources to answer this confidently."
+    },
+    {
+      "query_id": "comp_002",
+      "query": "Compare Redis and Memcached for distributed caching systems",
+      "category": "comparison",
+      "success": true,
+      "latency_ms": 2437,
+      "error_code": null,
+      "citation_metrics": {
+        "citation_validity": 1.0,
+        "citation_coverage": 0.0,
+        "citation_source_diversity": 0,
+        "claim_risk": 1.0
+      },
+      "retrieval_metrics": {
+        "top_k": 0,
+        "avg_similarity": 0.0,
+        "max_similarity": 0.0,
+        "min_similarity": 0.0,
+        "unique_domains": 0
+      },
+      "research_metrics": {
+        "initial_topics": 4,
+        "covered_topics": 0,
+        "missing_topics": 4,
+        "coverage_score": 0.0,
+        "iterations": 2,
+        "follow_up_queries": 7,
+        "sources_discovered": 3,
+        "sources_crawled": 0,
+        "sources_failed": 0,
+        "unique_domains": 0,
+        "contradictions_detected": 0,
+        "stop_reason": "no_new_queries_generated"
+      },
+      "answer": "I couldn't find enough reliable evidence in the retrieved sources to answer this confidently."
+    },
+    {
+      "query_id": "expl_001",
+      "query": "How does retrieval augmented generation work in modern LLM applications",
+      "category": "explanation",
+      "success": true,
+      "latency_ms": 1456,
+      "error_code": null,
+      "citation_metrics": {
+        "citation_validity": 1.0,
+        "citation_coverage": 0.0,
+        "citation_source_diversity": 0,
+        "claim_risk": 1.0
+      },
+      "retrieval_metrics": {
+        "top_k": 0,
+        "avg_similarity": 0.0,
+        "max_similarity": 0.0,
+        "min_similarity": 0.0,
+        "unique_domains": 0
+      },
+      "research_metrics": {
+        "initial_topics": 4,
+        "covered_topics": 0,
+        "missing_topics": 4,
+        "coverage_score": 0.0,
+        "iterations": 2,
+        "follow_up_queries": 7,
+        "sources_discovered": 3,
+        "sources_crawled": 0,
+        "sources_failed": 0,
+        "unique_domains": 0,
+        "contradictions_detected": 0,
+        "stop_reason": "no_new_queries_generated"
+      },
+      "answer": "I couldn't find enough reliable evidence in the retrieved sources to answer this confidently."
+    },
+    {
+      "query_id": "expl_002",
+      "query": "Explain the difference between symmetric and asymmetric encryption algorithms",
+      "category": "explanation",
+      "success": true,
+      "latency_ms": 1148,
+      "error_code": null,
+      "citation_metrics": {
+        "citation_validity": 1.0,
+        "citation_coverage": 0.0,
+        "citation_source_diversity": 0,
+        "claim_risk": 1.0
+      },
+      "retrieval_metrics": {
+        "top_k": 0,
+        "avg_similarity": 0.0,
+        "max_similarity": 0.0,
+        "min_similarity": 0.0,
+        "unique_domains": 0
+      },
+      "research_metrics": {
+        "initial_topics": 4,
+        "covered_topics": 0,
+        "missing_topics": 4,
+        "coverage_score": 0.0,
+        "iterations": 2,
+        "follow_up_queries": 7,
+        "sources_discovered": 3,
+        "sources_crawled": 0,
+        "sources_failed": 0,
+        "unique_domains": 0,
+        "contradictions_detected": 0,
+        "stop_reason": "no_new_queries_generated"
+      },
+      "answer": "I couldn't find enough reliable evidence in the retrieved sources to answer this confidently."
+    },
+    {
+      "query_id": "gap_001",
+      "query": "What are the exact secret engineering specifications of the Google Gemini 5.0 architecture design",
+      "category": "evidence_gap",
+      "success": true,
+      "latency_ms": 1176,
+      "error_code": null,
+      "citation_metrics": {
+        "citation_validity": 1.0,
+        "citation_coverage": 0.0,
+        "citation_source_diversity": 0,
+        "claim_risk": 1.0
+      },
+      "retrieval_metrics": {
+        "top_k": 0,
+        "avg_similarity": 0.0,
+        "max_similarity": 0.0,
+        "min_similarity": 0.0,
+        "unique_domains": 0
+      },
+      "research_metrics": {
+        "initial_topics": 4,
+        "covered_topics": 0,
+        "missing_topics": 4,
+        "coverage_score": 0.0,
+        "iterations": 2,
+        "follow_up_queries": 7,
+        "sources_discovered": 3,
+        "sources_crawled": 0,
+        "sources_failed": 0,
+        "unique_domains": 0,
+        "contradictions_detected": 0,
+        "stop_reason": "no_new_queries_generated"
+      },
+      "answer": "I couldn't find enough reliable evidence in the retrieved sources to answer this confidently."
+    },
+    {
+      "query_id": "gap_002",
+      "query": "List all internal code commits made to Vercel Next.js private repository in the last 2 hours",
+      "category": "evidence_gap",
+      "success": true,
+      "latency_ms": 1308,
+      "error_code": null,
+      "citation_metrics": {
+        "citation_validity": 1.0,
+        "citation_coverage": 0.0,
+        "citation_source_diversity": 0,
+        "claim_risk": 1.0
+      },
+      "retrieval_metrics": {
+        "top_k": 0,
+        "avg_similarity": 0.0,
+        "max_similarity": 0.0,
+        "min_similarity": 0.0,
+        "unique_domains": 0
+      },
+      "research_metrics": {
+        "initial_topics": 4,
+        "covered_topics": 0,
+        "missing_topics": 4,
+        "coverage_score": 0.0,
+        "iterations": 2,
+        "follow_up_queries": 7,
+        "sources_discovered": 3,
+        "sources_crawled": 0,
+        "sources_failed": 0,
+        "unique_domains": 0,
+        "contradictions_detected": 0,
+        "stop_reason": "no_new_queries_generated"
+      },
+      "answer": "I couldn't find enough reliable evidence in the retrieved sources to answer this confidently."
+    },
+    {
+      "query_id": "contra_001",
+      "query": "Is React classified as a library or a framework by official developers",
+      "category": "contradiction",
+      "success": true,
+      "latency_ms": 1106,
+      "error_code": null,
+      "citation_metrics": {
+        "citation_validity": 1.0,
+        "citation_coverage": 0.0,
+        "citation_source_diversity": 0,
+        "claim_risk": 1.0
+      },
+      "retrieval_metrics": {
+        "top_k": 0,
+        "avg_similarity": 0.0,
+        "max_similarity": 0.0,
+        "min_similarity": 0.0,
+        "unique_domains": 0
+      },
+      "research_metrics": {
+        "initial_topics": 4,
+        "covered_topics": 0,
+        "missing_topics": 4,
+        "coverage_score": 0.0,
+        "iterations": 2,
+        "follow_up_queries": 7,
+        "sources_discovered": 3,
+        "sources_crawled": 0,
+        "sources_failed": 0,
+        "unique_domains": 0,
+        "contradictions_detected": 0,
+        "stop_reason": "no_new_queries_generated"
+      },
+      "answer": "I couldn't find enough reliable evidence in the retrieved sources to answer this confidently."
+    },
+    {
+      "query_id": "contra_002",
+      "query": "Does Next.js App Router perform faster than Pages Router in production builds",
+      "category": "contradiction",
+      "success": true,
+      "latency_ms": 1671,
+      "error_code": null,
+      "citation_metrics": {
+        "citation_validity": 1.0,
+        "citation_coverage": 0.0,
+        "citation_source_diversity": 0,
+        "claim_risk": 1.0
+      },
+      "retrieval_metrics": {
+        "top_k": 0,
+        "avg_similarity": 0.0,
+        "max_similarity": 0.0,
+        "min_similarity": 0.0,
+        "unique_domains": 0
+      },
+      "research_metrics": {
+        "initial_topics": 4,
+        "covered_topics": 0,
+        "missing_topics": 4,
+        "coverage_score": 0.0,
+        "iterations": 2,
+        "follow_up_queries": 7,
+        "sources_discovered": 3,
+        "sources_crawled": 0,
+        "sources_failed": 0,
+        "unique_domains": 0,
+        "contradictions_detected": 0,
+        "stop_reason": "no_new_queries_generated"
+      },
+      "answer": "I couldn't find enough reliable evidence in the retrieved sources to answer this confidently."
+    },
+    {
+      "query_id": "curr_001",
+      "query": "What are the latest stable versions and release notes of Next.js framework in 2026",
+      "category": "current",
+      "success": true,
+      "latency_ms": 1157,
+      "error_code": null,
+      "citation_metrics": {
+        "citation_validity": 1.0,
+        "citation_coverage": 0.0,
+        "citation_source_diversity": 0,
+        "claim_risk": 1.0
+      },
+      "retrieval_metrics": {
+        "top_k": 0,
+        "avg_similarity": 0.0,
+        "max_similarity": 0.0,
+        "min_similarity": 0.0,
+        "unique_domains": 0
+      },
+      "research_metrics": {
+        "initial_topics": 4,
+        "covered_topics": 0,
+        "missing_topics": 4,
+        "coverage_score": 0.0,
+        "iterations": 2,
+        "follow_up_queries": 7,
+        "sources_discovered": 3,
+        "sources_crawled": 0,
+        "sources_failed": 0,
+        "unique_domains": 0,
+        "contradictions_detected": 0,
+        "stop_reason": "no_new_queries_generated"
+      },
+      "answer": "I couldn't find enough reliable evidence in the retrieved sources to answer this confidently."
+    },
+    {
+      "query_id": "curr_002",
+      "query": "What is the current market valuation and state of OpenAI corporation as of June 2026",
+      "category": "current",
+      "success": true,
+      "latency_ms": 1266,
+      "error_code": null,
+      "citation_metrics": {
+        "citation_validity": 1.0,
+        "citation_coverage": 0.0,
+        "citation_source_diversity": 0,
+        "claim_risk": 1.0
+      },
+      "retrieval_metrics": {
+        "top_k": 0,
+        "avg_similarity": 0.0,
+        "max_similarity": 0.0,
+        "min_similarity": 0.0,
+        "unique_domains": 0
+      },
+      "research_metrics": {
+        "initial_topics": 4,
+        "covered_topics": 0,
+        "missing_topics": 4,
+        "coverage_score": 0.0,
+        "iterations": 2,
+        "follow_up_queries": 7,
+        "sources_discovered": 3,
+        "sources_crawled": 0,
+        "sources_failed": 0,
+        "unique_domains": 0,
+        "contradictions_detected": 0,
+        "stop_reason": "no_new_queries_generated"
+      },
+      "answer": "I couldn't find enough reliable evidence in the retrieved sources to answer this confidently."
+    },
+    {
+      "query_id": "multi_001",
+      "query": "Compare React and Next.js across routing, SEO, performance, deployment and ideal use cases",
+      "category": "multi-topic",
+      "success": true,
+      "latency_ms": 1941,
+      "error_code": null,
+      "citation_metrics": {
+        "citation_validity": 1.0,
+        "citation_coverage": 0.0,
+        "citation_source_diversity": 0,
+        "claim_risk": 1.0
+      },
+      "retrieval_metrics": {
+        "top_k": 0,
+        "avg_similarity": 0.0,
+        "max_similarity": 0.0,
+        "min_similarity": 0.0,
+        "unique_domains": 0
+      },
+      "research_metrics": {
+        "initial_topics": 4,
+        "covered_topics": 0,
+        "missing_topics": 4,
+        "coverage_score": 0.0,
+        "iterations": 2,
+        "follow_up_queries": 7,
+        "sources_discovered": 3,
+        "sources_crawled": 0,
+        "sources_failed": 0,
+        "unique_domains": 0,
+        "contradictions_detected": 0,
+        "stop_reason": "no_new_queries_generated"
+      },
+      "answer": "I couldn't find enough reliable evidence in the retrieved sources to answer this confidently."
+    },
+    {
+      "query_id": "multi_002",
+      "query": "Detail the full lifecycle of a web request from DNS resolution to DOM rendering",
+      "category": "multi-topic",
+      "success": true,
+      "latency_ms": 1213,
+      "error_code": null,
+      "citation_metrics": {
+        "citation_validity": 1.0,
+        "citation_coverage": 0.0,
+        "citation_source_diversity": 0,
+        "claim_risk": 1.0
+      },
+      "retrieval_metrics": {
+        "top_k": 0,
+        "avg_similarity": 0.0,
+        "max_similarity": 0.0,
+        "min_similarity": 0.0,
+        "unique_domains": 0
+      },
+      "research_metrics": {
+        "initial_topics": 4,
+        "covered_topics": 0,
+        "missing_topics": 4,
+        "coverage_score": 0.0,
+        "iterations": 2,
+        "follow_up_queries": 7,
+        "sources_discovered": 3,
+        "sources_crawled": 0,
+        "sources_failed": 0,
+        "unique_domains": 0,
+        "contradictions_detected": 0,
+        "stop_reason": "no_new_queries_generated"
+      },
+      "answer": "I couldn't find enough reliable evidence in the retrieved sources to answer this confidently."
+    },
+    {
+      "query_id": "tech_003",
+      "query": "How do you implement micro-frontend architecture using Webpack Module Federation",
+      "category": "technical",
+      "success": true,
+      "latency_ms": 1136,
+      "error_code": null,
+      "citation_metrics": {
+        "citation_validity": 1.0,
+        "citation_coverage": 0.0,
+        "citation_source_diversity": 0,
+        "claim_risk": 1.0
+      },
+      "retrieval_metrics": {
+        "top_k": 0,
+        "avg_similarity": 0.0,
+        "max_similarity": 0.0,
+        "min_similarity": 0.0,
+        "unique_domains": 0
+      },
+      "research_metrics": {
+        "initial_topics": 4,
+        "covered_topics": 0,
+        "missing_topics": 4,
+        "coverage_score": 0.0,
+        "iterations": 2,
+        "follow_up_queries": 7,
+        "sources_discovered": 3,
+        "sources_crawled": 0,
+        "sources_failed": 0,
+        "unique_domains": 0,
+        "contradictions_detected": 0,
+        "stop_reason": "no_new_queries_generated"
+      },
+      "answer": "I couldn't find enough reliable evidence in the retrieved sources to answer this confidently."
+    }
+  ]
+}

@@ -24,12 +24,12 @@ export default function SourceCard({ source, index, isSelected = false, onClick 
   return (
     <div
       onClick={onClick}
-      className={`p-4 border rounded-xl bg-white dark:bg-zinc-950 transition-all text-left flex flex-col gap-2 ${
-        onClick ? "cursor-pointer hover:border-zinc-300 dark:hover:border-zinc-700" : ""
+      className={`peec-card peec-card-hover p-4 rounded-xl transition-all text-left flex flex-col gap-2 bg-white dark:bg-zinc-900 ${
+        onClick ? "cursor-pointer" : ""
       } ${
         isSelected 
-          ? "border-violet-500 ring-2 ring-violet-500/20 dark:border-violet-500" 
-          : "border-zinc-200 dark:border-zinc-800"
+          ? "border-zinc-900 dark:border-zinc-100 ring-1 ring-zinc-900/10 dark:ring-zinc-100/10" 
+          : "border-zinc-200/80 dark:border-zinc-800"
       }`}
     >
       <div className="flex items-center justify-between">
@@ -39,18 +39,18 @@ export default function SourceCard({ source, index, isSelected = false, onClick 
               (e.target as HTMLElement).style.display = "none";
             }} />
           ) : (
-            <Globe className="w-4 h-4 text-zinc-400" />
+            <Globe className="w-3.5 h-3.5 text-zinc-400 dark:text-zinc-500" />
           )}
-          <span className="text-xs font-semibold text-zinc-500 dark:text-zinc-400">
+          <span className="text-xs font-bold text-zinc-600 dark:text-zinc-400">
             {source.domain}
           </span>
         </div>
-        <span className="text-[10px] font-bold text-violet-600 dark:text-violet-400 bg-violet-50 dark:bg-violet-950/40 px-2 py-0.5 rounded-md">
+        <span className="text-[10px] font-bold text-zinc-500 dark:text-zinc-400 bg-zinc-100 dark:bg-zinc-800 px-2 py-0.5 rounded-md">
           Source #{index + 1}
         </span>
       </div>
 
-      <h4 className="text-sm font-semibold text-zinc-900 dark:text-zinc-50 leading-snug line-clamp-2">
+      <h4 className="text-sm font-bold text-zinc-900 dark:text-zinc-100 leading-snug line-clamp-2">
         {source.title}
       </h4>
 
@@ -58,7 +58,7 @@ export default function SourceCard({ source, index, isSelected = false, onClick 
         {source.excerpt}
       </p>
 
-      <div className="flex items-center justify-between border-t border-zinc-100 dark:border-zinc-900 mt-1 pt-2">
+      <div className="flex items-center justify-between border-t border-zinc-100 dark:border-zinc-800/80 mt-1 pt-2">
         {formattedDate ? (
           <div className="flex items-center gap-1 text-[10px] text-zinc-400 dark:text-zinc-500">
             <Calendar className="w-3 h-3" />
@@ -73,7 +73,7 @@ export default function SourceCard({ source, index, isSelected = false, onClick 
           target="_blank"
           rel="noopener noreferrer"
           onClick={(e) => e.stopPropagation()} // Avoid triggering parent click
-          className="inline-flex items-center gap-1 text-[11px] font-semibold text-violet-600 dark:text-violet-400 hover:underline"
+          className="inline-flex items-center gap-1 text-[11px] font-bold text-sky-600 dark:text-sky-400 hover:underline"
         >
           <span>Open Source</span>
           <ExternalLink className="w-3 h-3" />

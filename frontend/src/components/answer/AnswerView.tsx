@@ -1,9 +1,9 @@
 "use client";
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { SearchResult } from "../../types/search";
 import CitationMarker from "./CitationMarker";
-import { Star, Check, Award, ArrowUpRight, Globe } from "lucide-react";
+import { Star, Check, Award, ArrowUpRight, Globe, Save, Download, FileText, Bookmark, Clipboard } from "lucide-react";
 
 interface AnswerViewProps {
   result: SearchResult;
@@ -21,11 +21,17 @@ export default function AnswerView({ result, onCitationClick, onSourceClick }: A
       const match = part.match(/^\[(\d+)\]$/);
       if (match) {
         const citationId = parseInt(match[1], 10);
+        const citationObj = result.citations?.find((c) => c.id === citationId);
+        const evObj = citationObj ? result.evidences?.find((e) => e.id === citationObj.evidenceId) : null;
+        const srcObj = citationObj ? result.sources?.find((s) => s.id === citationObj.sourceId) : null;
+        
         return (
           <CitationMarker
             key={idx}
             id={citationId}
             onClick={onCitationClick}
+            evidence={evObj}
+            source={srcObj}
           />
         );
       }
@@ -33,16 +39,148 @@ export default function AnswerView({ result, onCitationClick, onSourceClick }: A
     });
   };
 
+  const [isSaved, setIsSaved] = useState(false);
+  const [noteText, setNoteText] = useState("");
+  const [showNoteArea, setShowNoteArea] = useState(false);
+  const [copied, setCopied] = useState(false);
+
+  const researchId = (result as any).research_id || 1;
+  const apiBase = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+
+  useEffect(() => {
+    // Load note for this session
+    fetch(`${apiBase}/api/research/${researchId}/note`)
+      .then(res => res.json())
+      .then(data => setNoteText(data.content || ""))
+      .catch(e => console.error("Failed to load note:", e));
+      
+    // Set initial saved status if state status is saved
+    if (result.mode === "research" && (result as any).status === "saved") {
+      setIsSaved(true);
+    }
+  }, [researchId]);
+
+  const handleSave = async () => {
+    try {
+      const res = await fetch(`${apiBase}/api/research/${researchId}/save`, { method: "POST" });
+      if (res.ok) {
+        setIsSaved(true);
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  const handleNoteChange = async (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const val = e.target.value;
+    setNoteText(val);
+    try {
+      await fetch(`${apiBase}/api/research/${researchId}/note`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ content: val })
+      });
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  const handleCopy = () => {
+    navigator.clipboard.writeText(answer);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
   const paragraphs = answer.split("\n");
 
   return (
     <div className="w-full max-w-3xl mx-auto py-6 flex flex-col gap-6">
       {/* Answer Body Section */}
-      <section className="bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 p-6 rounded-2xl shadow-sm">
-        <div className="flex items-center gap-2 mb-4">
-          <Award className="w-5 h-5 text-violet-500" />
-          <h2 className="text-lg font-semibold text-zinc-900 dark:text-zinc-50">Answer</h2>
+      <section className="peec-card p-6 sm:p-8 rounded-2xl bg-white dark:bg-zinc-900 border border-zinc-200/90 dark:border-zinc-800 shadow-xs">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-zinc-100 dark:border-zinc-800 pb-4 mb-4">
+          <div className="flex items-center gap-2">
+            <Award className="w-5 h-5 text-zinc-900 dark:text-zinc-100" />
+            <h2 className="text-lg font-bold text-zinc-900 dark:text-zinc-50">Answer</h2>
+          </div>
+          
+          {/* Action Toolbar */}
+          <div className="flex flex-wrap items-center gap-1.5">
+            <button
+              onClick={handleCopy}
+              className="py-1.5 px-3 hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-lg text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors flex items-center gap-1.5 text-xs font-semibold"
+              title="Copy to clipboard"
+            >
+              {copied ? <Check className="w-3.5 h-3.5 text-emerald-500" /> : <Clipboard className="w-3.5 h-3.5" />}
+              <span>{copied ? "Copied" : "Copy"}</span>
+            </button>
+
+            <button
+              onClick={handleSave}
+              disabled={isSaved}
+              className={`py-1.5 px-3 rounded-lg transition-colors flex items-center gap-1.5 text-xs font-semibold ${
+                isSaved 
+                  ? "text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/20"
+                  : "text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800 hover:text-zinc-900 dark:hover:text-zinc-100"
+              }`}
+            >
+              <Save className="w-3.5 h-3.5" />
+              <span>{isSaved ? "Saved" : "Save"}</span>
+            </button>
+
+            <button
+              onClick={() => setShowNoteArea(!showNoteArea)}
+              className="py-1.5 px-3 hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-lg text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors flex items-center gap-1.5 text-xs font-semibold"
+            >
+              <FileText className="w-3.5 h-3.5" />
+              <span>Note</span>
+            </button>
+
+            {/* Document Exports Dropdown Links */}
+            <div className="relative group">
+              <button className="py-1.5 px-3 hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-lg text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors flex items-center gap-1.5 text-xs font-semibold">
+                <Download className="w-3.5 h-3.5" />
+                <span>Export</span>
+              </button>
+              <div className="absolute right-0 top-full mt-1 hidden group-hover:block peec-card bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl shadow-lg p-1.5 z-40 w-36">
+                <a
+                  href={`${apiBase}/api/research/${researchId}/export?format=markdown`}
+                  download
+                  className="block px-3 py-1.5 hover:bg-zinc-50 dark:hover:bg-zinc-800 rounded-lg text-xs text-zinc-700 dark:text-zinc-300 font-semibold"
+                >
+                  Markdown (.md)
+                </a>
+                <a
+                  href={`${apiBase}/api/research/${researchId}/export?format=pdf`}
+                  download
+                  className="block px-3 py-1.5 hover:bg-zinc-50 dark:hover:bg-zinc-800 rounded-lg text-xs text-zinc-700 dark:text-zinc-300 font-semibold"
+                >
+                  PDF Report
+                </a>
+                <a
+                  href={`${apiBase}/api/research/${researchId}/export?format=docx`}
+                  download
+                  className="block px-3 py-1.5 hover:bg-zinc-50 dark:hover:bg-zinc-800 rounded-lg text-xs text-zinc-700 dark:text-zinc-300 font-semibold"
+                >
+                  Word (.docx)
+                </a>
+              </div>
+            </div>
+          </div>
         </div>
+
+        {/* Expandable Notes Input Field */}
+        {showNoteArea && (
+          <div className="mb-4 p-3 bg-zinc-50 dark:bg-zinc-900 rounded-xl border border-zinc-200 dark:border-zinc-800/80">
+            <label className="text-[10px] text-zinc-400 dark:text-zinc-500 font-bold uppercase block mb-1">Add research notes</label>
+            <textarea
+              value={noteText}
+              onChange={handleNoteChange}
+              placeholder="Jot down notes, conclusions, or key takeaways for this topic..."
+              rows={3}
+              className="w-full text-xs text-zinc-800 dark:text-zinc-200 placeholder-zinc-400 bg-transparent border-0 resize-none outline-none focus:ring-0 p-0"
+            />
+          </div>
+        )}
         
         <div className="prose prose-zinc dark:prose-invert max-w-none text-zinc-800 dark:text-zinc-200 leading-relaxed text-base space-y-4">
           {paragraphs.map((p, idx) => {
@@ -102,7 +240,8 @@ export default function AnswerView({ result, onCitationClick, onSourceClick }: A
       )}
 
       {/* Sources References Grid */}
-      <section>
+      {sources && sources.length > 0 && result.retrieval_used !== false && result.intent !== "conversational" && (
+        <section>
         <div className="flex items-center justify-between mb-3 px-1">
           <h3 className="text-sm font-bold text-zinc-500 dark:text-zinc-400 uppercase tracking-wider">
             Sources
@@ -149,6 +288,7 @@ export default function AnswerView({ result, onCitationClick, onSourceClick }: A
           ))}
         </div>
       </section>
+      )}
     </div>
   );
 }
